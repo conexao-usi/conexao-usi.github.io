@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Resultado do Time</title>
+<meta name="description" content="O resultado da pesquisa Conexão Usinagem e o plano de ação do time.">
+<meta name="theme-color" content="#0b5cab" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1622" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f5f9; --card:#fff; --ink:#132033; --ink2:#3c4b60; --muted:#5b6b80; --line:#dde4ee; --grid:#e8edf3;
+  --brand:#0b5cab; --brand-ink:#fff; --brand-soft:#e6f0fb; --gold:#9a6a12;
+  --fav:#1f6fd1; --par:#a9b3c0; --des:#d9692f; --ok:#1e8e5a; --and:#b7791f;
+  --shadow:0 6px 24px rgba(19,32,51,.07); --r:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1622; --card:#172231; --ink:#e7edf5; --ink2:#c3cfdd; --muted:#9aabbf; --line:#273547; --grid:#223041;
+    --brand:#4d9be6; --brand-ink:#08121e; --brand-soft:#1b2d44; --gold:#f3c66b;
+    --fav:#4a8fdc; --par:#5d6a7b; --des:#d0683a; --ok:#3fbf7f; --and:#e0b04c; --shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1622; --card:#172231; --ink:#e7edf5; --ink2:#c3cfdd; --muted:#9aabbf; --line:#273547; --grid:#223041;
+  --brand:#4d9be6; --brand-ink:#08121e; --brand-soft:#1b2d44; --gold:#f3c66b;
+  --fav:#4a8fdc; --par:#5d6a7b; --des:#d0683a; --ok:#3fbf7f; --and:#e0b04c; --shadow:0 6px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+.wrap{max-width:680px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom))}
+header.top{display:flex;align-items:center;gap:12px;min-height:44px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--brand);display:grid;place-items:center;flex:none}
+.logo svg{width:22px;height:22px}
+.top .t{font-weight:700;font-size:16px;line-height:1.2}
+.top .s{font-size:13px;color:var(--muted)}
+.hero{margin:16px 0 14px;border-radius:22px;padding:22px 20px;color:#eef3fa;background:radial-gradient(500px 260px at 90% 0%,#1a4a85 0,#0b1d3a 60%,#08152b 100%)}
+.hero .ey{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7cc0f5}
+.hero h1{font-size:28px;line-height:1.15;margin:6px 0 8px}
+.hero p{margin:0;color:#b8c6d8;font-size:15px}
+.hero .nums{display:flex;gap:22px;margin-top:18px;align-items:center}
+.hero .nums b{display:block;font-size:30px;line-height:1;font-weight:800;color:#fff}
+.hero .nums span{font-size:13px;color:#b8c6d8}
+.ring{width:74px;height:74px;flex:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.card h2{font-size:19px;margin:0 0 4px;line-height:1.25}
+.card .sub{font-size:14px;color:var(--muted);margin:0 0 14px}
+.simples{font-size:14px;color:var(--ink2);background:var(--brand-soft);border-radius:12px;padding:10px 12px;margin:0 0 14px}
+.simples b.tt{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand);margin-bottom:2px}
+.temas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tema{border:1px solid var(--line);border-radius:14px;padding:12px}
+.tema .v{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.tema .l{font-size:13px;color:var(--muted);font-weight:600}
+.tema .b{height:6px;border-radius:3px;background:var(--grid);margin-top:8px;overflow:hidden}
+.tema .b i{display:block;height:100%;border-radius:3px}
+.dest{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--grid)}
+.dest:first-of-type{border-top:0}
+.dest .p{flex:none;width:62px;font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.dest .tx{font-size:15px;font-weight:600;line-height:1.35}
+.dest .mt{font-size:12.5px;color:var(--muted)}
+.ctrl{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:13px;font-weight:600;background:var(--card)}
+.toggle[aria-pressed="true"]{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.toggle .sw{width:30px;height:18px;border-radius:9px;background:var(--line);position:relative}
+.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
+.toggle[aria-pressed="true"] .sw{background:var(--brand)}
+.toggle[aria-pressed="true"] .sw::after{left:14px}
+.leg{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--ink2)}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.it{padding:12px 0;border-top:1px solid var(--grid)}
+.it .tx{font-size:15px;font-weight:600;line-height:1.35}
+.it .row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.it .bar{flex:1;display:flex;gap:2px;height:12px;min-width:0}
+.it .bar span{display:block;height:100%}
+.it .bar span:first-child{border-radius:4px 0 0 4px}.it .bar span:last-child{border-radius:0 4px 4px 0}.it .bar span:only-child{border-radius:4px}
+.it .v{flex:none;width:46px;text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.it .rl{flex:none;width:44px;font-size:12px;font-weight:700;color:var(--muted)}
+.it .vrow{margin-top:5px}.it .vrow .bar{height:8px;opacity:.55}.it .vrow .v{font-weight:600;color:var(--muted);font-size:14px}
+.it .sem{font-size:12.5px;color:var(--muted);font-style:italic}
+.it .dl{font-size:12.5px;font-weight:700;margin:4px 0 0 54px}
+.up{color:var(--ok)}.down{color:var(--des)}
+.etapas{display:flex;gap:4px;margin:14px 0 8px}
+.etapas .seg{flex:1;height:8px;border:0;padding:0;border-radius:4px;background:var(--grid);position:relative}
+.etapas .seg::before{content:"";position:absolute;inset:-14px 0}
+.etapas .seg.feito{background:color-mix(in srgb,var(--brand) 45%,var(--grid))}
+.etapas .seg.atual{background:var(--brand)}
+.etq{display:flex;flex-direction:column;margin-bottom:2px}
+.etq span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.etq b{font-size:20px;line-height:1.25}
+.etq b:focus{outline:none}
+.pnav{display:flex;gap:10px;margin-top:14px}
+.pb{flex:1;min-height:48px;border-radius:14px;border:0;background:var(--brand);color:var(--brand-ink);font-weight:700;padding:0 12px}
+.pb.sec{flex:0 0 auto;background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.pb:disabled{opacity:.4;cursor:default}
+.bl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 0}
+.foco{border:1.5px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.foco .h{display:flex;gap:10px;align-items:flex-start}
+.foco .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:800;font-size:14px}
+.foco .t{font-weight:700;line-height:1.35}
+.foco .meta{font-size:13px;color:var(--muted);margin:6px 0 10px 38px}
+.foco .meta b{color:var(--ok);font-size:15px}
+.prog{height:8px;border-radius:4px;background:var(--grid);overflow:hidden;margin:0 0 4px 38px}
+.prog i{display:block;height:100%;background:var(--ok);border-radius:4px}
+.progt{font-size:12.5px;color:var(--muted);margin:0 0 8px 38px}
+.ac{display:flex;gap:10px;align-items:flex-start;padding:8px 0 8px 38px;border-top:1px dashed var(--grid);font-size:14.5px;line-height:1.35}
+.ac .st{flex:none;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:.02em;margin-left:auto;white-space:nowrap}
+.st.fz{background:color-mix(in srgb,var(--muted) 15%,transparent);color:var(--muted)}
+.st.an{background:color-mix(in srgb,var(--and) 18%,transparent);color:var(--and)}
+.st.ft{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.ac small{display:block;color:var(--muted);font-size:12px}
+.assin{margin:22px 0 8px;padding-top:16px;border-top:1px solid var(--line)}
+.assin .t1{display:block;font-family:Lora,Georgia,serif;font-style:italic;font-size:21px;line-height:1.3;color:var(--gold)}
+.assin .t2{display:block;font-size:14px;color:var(--muted)}
+.vazio{color:var(--muted)}
+.demo{font-size:12px;color:var(--and);font-weight:700;text-align:center;margin:6px 0}
+.espera{text-align:center;padding:30px 20px}
+.espera .ic{font-size:44px}
+.spin{width:36px;height:36px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--brand);animation:sp 1s linear infinite;margin:30vh auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:14px;background:var(--brand);color:var(--brand-ink);font-weight:700;text-decoration:none}
+@media (max-width:380px){.hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="spin"></div></div>
+<script>
+/* ======== CONFIGURAÇÃO: a mesma URL /exec do index.html ======== */
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwY6wtu2rxdj4lpGC_88gmSg4Eu8-YSO2E43Hl5piZ39I6rRC6e_f_mWarqAVvXV_fRyQ/exec';
+const FRASE = ['O Reino de Deus na dinâmica da vida.', 'Onde suficiências e necessidades se complementam!'];
+/* ================================================================ */
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=x=>Math.round(100*x)+'%';
+const vpct=v=>{const m=/(\d+)%/.exec(v||'');return m?+m[1]/100:null};
+const dBR=s=>s&&/^\d{4}-\d{2}-\d{2}/.test(s)?s.slice(8,10)+'/'+s.slice(5,7):(s||'');
+let mostrarVoice=false;try{mostrarVoice=localStorage.getItem('conexao_time_voice')==='1'}catch(e){}
+let D=null, etapa=0;
+
+const topo=`<header class="top"><div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
+  <div><div class="t">Conexão Usinagem</div><div class="s">Resultado do time</div></div></header>`;
+const assinatura=()=>FRASE[0]?`<p class="assin"><span class="t1">${esc(FRASE[0])}</span><span class="t2">${esc(FRASE[1]||'')}</span></p>`:'';
+
+async function carregar(){
+  try{
+    const d=ENDPOINT?await (await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({acao:'publico'}),headers:{'Content-Type':'text/plain;charset=utf-8'}})).json():demo();
+    if(!d.ok){app.innerHTML=topo+`<div class="card espera"><div class="ic">⏳</div><h2>O resultado sai em breve</h2>
+      <p class="vazio">Assim que a pesquisa for encerrada e consolidada, o resultado do time aparece aqui.</p><p><a class="btn" href="./">Voltar</a></p></div>${assinatura()}`;return}
+    D=d;render();
+  }catch(e){app.innerHTML=topo+`<div class="card espera"><div class="ic">📶</div><h2>Sem conexão</h2><p class="vazio">Verifique a internet e tente de novo.</p><p><a class="btn" href="">Tentar de novo</a></p></div>`}
+}
+
+function anel(x){const r=31,c=2*Math.PI*r;return `<svg class="ring" viewBox="0 0 74 74"><circle cx="37" cy="37" r="${r}" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="8"/>
+  <circle cx="37" cy="37" r="${r}" fill="none" stroke="#5fb2f2" stroke-width="8" stroke-linecap="round" stroke-dasharray="${c*Math.min(1,x)} ${c}" transform="rotate(-90 37 37)"/>
+  <text x="37" y="42" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">${pct(x)}</text></svg>`}
+
+function render(){
+  const d=D, vis=d.itens.filter(i=>!i.oculto), ord=vis.slice().sort((a,b)=>b.fav-a.fav);
+  const bl={};vis.forEach(i=>(bl[i.bloco]=bl[i.bloco]||[]).push(i.fav));
+  const temas=Object.keys(bl).map(k=>({k,v:bl[k].reduce((a,b)=>a+b,0)/bl[k].length})).sort((a,b)=>b.v-a.v);
+  const temVoice=vis.some(i=>vpct(i.voice)!==null);
+  const barra=(segs,lab)=>`<div class="bar" role="img" aria-label="${lab}">${segs.filter(x=>x[1]>0).map(([k,v])=>`<span style="flex:${v};background:var(--${k})"></span>`).join("")}</div>`;
+  const linha=i=>{const vp=vpct(i.voice),dl=vp===null?null:Math.round(100*(i.fav-vp)),cmp=mostrarVoice&&!i.oculto;
+    if(i.oculto)return `<div class="it"><div class="tx">${esc(i.texto)}</div><div class="row"><span class="vazio" style="font-size:13px">poucas respostas para mostrar</span></div></div>`;
+    const agora=barra([["des",i.des],["par",i.par],["fav",i.fav]],`Agora: desfavorável ${pct(i.des)}, parcial ${pct(i.par)}, favorável ${pct(i.fav)}`);
+    return `<div class="it"><div class="tx">${esc(i.texto)}</div>
+      <div class="row">${cmp?"<span class=\"rl\">Agora</span>":""}${agora}<div class="v">${pct(i.fav)}</div></div>
+      ${cmp?(vp===null?`<div class="row vrow"><span class="rl">Voice</span><span class="sem">pergunta nova, não existia no Voice</span></div>`
+        :`<div class="row vrow"><span class="rl">Voice</span>${barra([["des",1-vp],["fav",vp]],`Voice 2026: favorável ${pct(vp)}`)}<div class="v">${pct(vp)}</div></div>
+        <div class="dl ${dl>=0?"up":"down"}">${dl>0?"▲ +"+dl:dl<0?"▼ "+dl:"= 0"} pontos desde o Voice</div>`):""}</div>`};
+  const blocos=[...new Set(d.itens.map(i=>i.bloco))];
+  const pl=d.plano&&d.plano.focos&&d.plano.focos.length?d.plano:null;
+  const nA=pl?pl.focos.reduce((a,f)=>a+f.acoes.length,0):0, nF=pl?pl.focos.reduce((a,f)=>a+f.acoes.filter(x=>/feito/i.test(x.status)).length,0):0;
+
+  app.innerHTML=`${topo}
+  ${!ENDPOINT?'<div class="demo">DADOS DE EXEMPLO</div>':''}
+  <section class="hero">
+    <div class="ey">${esc(d.encerradaEm?'Pesquisa encerrada em '+d.encerradaEm:'Resultado da pesquisa')}</div>
+    <h1>Vocês falaram.<br>Aqui está o que ouvimos.</h1>
+    <p>Resultado do grupo, sem identificar ninguém.</p>
+    <div class="nums">${anel(d.adesao)}<div><b>${d.respostas} de ${d.time}</b><span>pessoas participaram</span></div>
+      ${pl?`<div><b>${nF}/${nA}</b><span>ações feitas</span></div>`:''}</div>
+  </section>
+
+  <section class="card">
+    <h2>Como ler</h2>
+    <div class="simples" style="margin:6px 0 0"><b class="tt">Em palavras simples</b><b>60%</b> quer dizer que <b>6 em cada 10</b> pessoas marcaram <b>concordo</b> ou <b>concordo totalmente</b>. É a mesma régua do Voice.</div>
+  </section>
+
+  <section class="card">
+    <h2>Os temas</h2><p class="sub">Do mais forte ao que pede mais atenção</p>
+    <div class="temas">${temas.map(t=>`<div class="tema"><div class="v" style="color:${t.v<.5?'var(--des)':'var(--fav)'}">${pct(t.v)}</div><div class="l">${esc(t.k)}</div><div class="b"><i style="width:${pct(t.v)};background:${t.v<.5?'var(--des)':'var(--fav)'}"></i></div></div>`).join('')}</div>
+  </section>
+
+  ${ord.length>=3?`<section class="card"><h2>👍 O que está indo bem</h2><p class="sub">As frases com mais concordância</p>
+    ${ord.slice(0,3).map(i=>`<div class="dest"><div class="p" style="color:var(--fav)">${pct(i.fav)}</div><div><div class="tx">${esc(i.texto)}</div><div class="mt">${esc(i.bloco)}</div></div></div>`).join('')}</section>
+  <section class="card"><h2>🎯 Onde vamos melhorar</h2><p class="sub">As frases com menos concordância</p>
+    ${ord.slice(-3).reverse().map(i=>`<div class="dest"><div class="p" style="color:var(--des)">${pct(i.fav)}</div><div><div class="tx">${esc(i.texto)}</div><div class="mt">${esc(i.bloco)}</div></div></div>`).join('')}</section>`:''}
+
+  ${pl?`<section class="card"><h2>🛠️ O que vamos fazer</h2><p class="sub">O plano de ação do time e o andamento de cada ação</p>
+    ${pl.focos.map((f,k)=>{const feitas=f.acoes.filter(a=>/feito/i.test(a.status)).length;return `<div class="foco">
+      <div class="h"><span class="n">${k+1}</span><div class="t">${esc(f.texto)}</div></div>
+      <div class="meta">Meta: de ${pct(f.atual)} para <b>${pct(f.meta)}</b></div>
+      <div class="prog"><i style="width:${f.acoes.length?Math.round(100*feitas/f.acoes.length):0}%"></i></div><div class="progt">${feitas} de ${f.acoes.length} ações feitas</div>
+      ${f.acoes.map(a=>{const s=/feito/i.test(a.status)?['ft','Feito']:/andamento/i.test(a.status)?['an','Em andamento']:['fz','A fazer'];
+        return `<div class="ac"><div>${esc(a.txt)}<small>até ${dBR(a.prazo)}</small></div><span class="st ${s[0]}">${s[1]}</span></div>`}).join('')}
+    </div>`}).join('')}</section>`:''}
+
+  <section class="card" id="frases">
+    <div class="ctrl"><h2 style="margin:0">Todas as frases</h2>
+      ${temVoice?`<button class="toggle" id="tv" aria-pressed="${mostrarVoice}"><span class="sw"></span>Comparar com Voice</button>`:''}</div>
+    <div class="leg" style="margin:8px 0 2px"><span><i style="background:var(--des)"></i>Discordo</span><span><i style="background:var(--par)"></i>Concordo parcialmente</span><span><i style="background:var(--fav)"></i>Concordo</span></div>
+    ${mostrarVoice&&temVoice?`<p class="sub" style="margin:8px 0 0;font-size:12.5px">Barra fina e clara = Voice 2026. O Voice não mostra o “parcial”: só concorda e não concorda.</p>`:""}
+    <div class="etapas" role="tablist" aria-label="Temas">${blocos.map((b,k)=>`<button role="tab" class="seg ${k<etapa?"feito":k===etapa?"atual":""}" aria-selected="${k===etapa}" data-etapa="${k}" aria-label="Tema ${k+1}: ${esc(b)}"></button>`).join("")}</div>
+    <div class="etq"><span>Tema ${etapa+1} de ${blocos.length}${etapa<blocos.length-1?" · depois: "+esc(blocos[etapa+1]):""}</span><b>${esc(blocos[etapa])}</b></div>
+    <div id="pagina">${d.itens.filter(i=>i.bloco===blocos[etapa]).map(linha).join("")}</div>
+    <div class="pnav">
+      <button class="pb sec" data-etapa="${etapa-1}" ${etapa===0?"disabled":""}>‹ Anterior</button>
+      ${etapa<blocos.length-1?`<button class="pb" data-etapa="${etapa+1}" aria-label="Próximo tema: ${esc(blocos[etapa+1])}">Próximo tema ›</button>`:`<button class="pb sec" data-etapa="0">Voltar ao início ↺</button>`}
+    </div>
+  </section>
+  ${assinatura()}`;
+  const ir=k=>{if(k<0||k>=blocos.length)return;etapa=k;render();const f=document.getElementById("frases");f.scrollIntoView({block:"start"});const h=f.querySelector(".etq b");if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true})}};
+  app.querySelectorAll("#frases [data-etapa]").forEach(b=>b.onclick=()=>ir(+b.dataset.etapa));
+  const pg=document.getElementById("pagina");let x0=null,y0=0;
+  pg.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  pg.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy))ir(etapa+(dx<0?1:-1))});
+  const tv=document.getElementById('tv');
+  if(tv)tv.onclick=()=>{mostrarVoice=!mostrarVoice;try{localStorage.setItem('conexao_time_voice',mostrarVoice?'1':'0')}catch(e){}const y=scrollY;render();scrollTo(0,y)};
+}
+
+function demo(){
+  const P=[['Voz','Posso discordar do meu líder sem medo de consequências.','31%',.45,.35],['Voz','Quando dou uma ideia, recebo um retorno, mesmo que a resposta seja "não".','38%',.5,.3],
+   ['Voz','Me sinto à vontade para sugerir melhorias no meu posto de trabalho.','48%',.6,.25],['Reconhecimento','Meu líder percebe quando faço um bom trabalho.','48%',.55,.3],
+   ['Reconhecimento','Recebo feedback do meu líder com frequência suficiente.','',.4,.35],['Reconhecimento','Entendi o resultado da minha última avaliação de desempenho e o que fazer para melhorar.','',.35,.3],
+   ['Desenvolvimento','Sei o que preciso aprender para crescer aqui.','31%',.4,.35],['Desenvolvimento','Tenho oportunidades reais de aprender coisas novas (treinamento, outro posto, outra máquina).','31%',.35,.4],
+   ['Colegas','Me sinto respeitado pelos meus colegas.','52%',.6,.25],['Colegas','No meu turno, trabalhamos como um time para atingir as metas.','52%',.65,.2],
+   ['Colegas','Quando surge um desentendimento no time, ele é resolvido de forma justa e respeitosa.','',.55,.3],['Líder','Meu líder está presente e acessível quando preciso.','59%',.75,.15],
+   ['Líder','Meu líder trata todos de forma justa, sem favorecer ninguém.','',.6,.25],['Líder','Meu líder age com firmeza quando alguém tem um comportamento inadequado.','',.5,.3],['Motivação','Me sinto motivado a dar o meu melhor todos os dias.','55%',.6,.25]];
+  return {ok:true,campanha:'conexao-2027-1',encerradaEm:'20/02/2027',time:31,respostas:24,adesao:24/31,minRespostas:5,
+    itens:P.map(([bloco,texto,v,fav,par],k)=>({id:'q'+(k+1),bloco,texto,voice:v?'Voice · '+v:'',n:24,oculto:false,fav,par,des:1-fav-par})),
+    plano:{focos:[
+      {texto:'Tenho oportunidades reais de aprender coisas novas (treinamento, outro posto, outra máquina).',atual:.35,meta:.5,acoes:[{txt:'Rodízio planejado de postos e máquinas',prazo:'2027-03-30',status:'Em andamento'},{txt:'Treinamento em dupla no posto com os técnicos de referência',prazo:'2027-04-30',status:'A fazer'}]},
+      {texto:'Entendi o resultado da minha última avaliação de desempenho e o que fazer para melhorar.',atual:.35,meta:.5,acoes:[{txt:'Conversa individual com quem recebeu C: explicar a nota e combinar um plano de 90 dias',prazo:'2027-03-15',status:'Feito'},{txt:'Explicar ao time os critérios A/B/C com exemplos do dia a dia',prazo:'2027-03-30',status:'Feito'}]},
+      {texto:'Recebo feedback do meu líder com frequência suficiente.',atual:.4,meta:.55,acoes:[{txt:'Feedback rápido no posto toda semana: 1 ponto forte + 1 ajuste',prazo:'2027-03-20',status:'Em andamento'}]}]}};
+}
+carregar();
+</script>
+</body>
+</html>

@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Painel do Líder</title>
+<meta name="description" content="Adesão, resultados parciais e resultado final da pesquisa Conexão Usinagem.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b5cab">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lora:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f5f9; --card:#ffffff; --ink:#132033; --ink2:#3c4b60; --muted:#5b6b80; --line:#dde4ee; --grid:#e8edf3;
+  --brand:#0b5cab; --brand-ink:#fff; --brand-soft:#e6f0fb;
+  --fav:#1f6fd1; --par:#a9b3c0; --des:#d9692f;
+  --ok:#1e8e5a; --warn:#b7791f; --shadow:0 6px 24px rgba(19,32,51,.07); --r:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1622; --card:#172231; --ink:#e7edf5; --ink2:#c3cfdd; --muted:#9aabbf; --line:#273547; --grid:#223041;
+    --brand:#4d9be6; --brand-ink:#08121e; --brand-soft:#1b2d44;
+    --fav:#4a8fdc; --par:#5d6a7b; --des:#d0683a; --ok:#3fbf7f; --warn:#e0b04c; --shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1622; --card:#172231; --ink:#e7edf5; --ink2:#c3cfdd; --muted:#9aabbf; --line:#273547; --grid:#223041;
+  --brand:#4d9be6; --brand-ink:#08121e; --brand-soft:#1b2d44;
+  --fav:#4a8fdc; --par:#5d6a7b; --des:#d0683a; --ok:#3fbf7f; --warn:#e0b04c; --shadow:0 6px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-text-size-adjust:100%}
+button,input{font:inherit;color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
+header.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--brand);display:grid;place-items:center;flex:none}
+.logo svg{width:22px;height:22px}
+.top h1{font-size:18px;margin:0;line-height:1.2}
+.top .s{font-size:13px;color:var(--muted)}
+.top .acoes{margin-left:auto;display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:600;font-size:14px}
+.btn.pri{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn svg{width:16px;height:16px}
+.btn:focus-visible,input:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+.card h2{font-size:15px;margin:0 0 2px}
+.card .sub{font-size:13px;color:var(--muted);margin:0 0 14px}
+.status{display:flex;gap:10px;align-items:flex-start;margin:16px 0;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+.status .tag{flex:none;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.tag.aberta{background:var(--brand-soft);color:var(--brand)}
+.tag.encerrada{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.status p{margin:0;font-size:14px;color:var(--ink2)}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(3,1fr)}
+@media (max-width:720px){.kpis{grid-template-columns:1fr 1fr}.kpis .k1{grid-column:1/-1}}
+.kpi .lbl{font-size:13px;color:var(--muted);font-weight:600}
+.kpi .val{font-size:34px;font-weight:750;line-height:1.1;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.kpi .det{font-size:13px;color:var(--muted)}
+.k1{display:flex;gap:16px;align-items:center}
+.ring{flex:none;width:96px;height:96px}
+.duas{grid-template-columns:1.25fr 1fr}
+@media (max-width:820px){.duas{grid-template-columns:1fr}}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font-size:11px;fill:var(--muted)}
+.leg{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink2);margin:0 0 12px}
+.leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--brand-soft);color:var(--brand)}
+.bloco{margin-top:14px}
+.etapas{display:flex;gap:4px;margin:14px 0 8px}
+.etapas .sg{flex:1;height:8px;border:0;padding:0;border-radius:4px;background:var(--grid);position:relative;cursor:pointer}
+.etapas .sg::before{content:"";position:absolute;inset:-14px 0}
+.etapas .sg.feito{background:color-mix(in srgb,var(--brand) 45%,var(--grid))}
+.etapas .sg.atual{background:var(--brand)}
+.etq{display:flex;flex-direction:column}
+.etq span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.etq b{font-size:19px;line-height:1.25}.etq b:focus{outline:none}
+.pnav{display:flex;gap:10px;margin-top:14px}
+.pb{flex:1;min-height:48px;border-radius:14px;border:0;background:var(--brand);color:var(--brand-ink,#fff);font-weight:700;font:inherit;font-weight:700;padding:0 12px;cursor:pointer}
+.pb.sec{flex:0 0 auto;background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.pb:disabled{opacity:.4;cursor:default}
+.bloco h3{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) 220px 92px;gap:6px 14px;align-items:center;padding:10px 0;border-top:1px solid var(--grid)}
+.item .tx{font-size:14px;color:var(--ink)}
+.item .vo{font-size:12px;color:var(--muted)}
+.bar{display:flex;gap:2px;height:14px}
+.barras{display:grid;grid-template-columns:1fr;gap:4px;align-items:center;min-width:0}
+.tab.com-voice .barras{grid-template-columns:42px minmax(0,1fr)}
+.barras .rl{font-size:11px;font-weight:700;color:var(--muted)}
+.barras .vbar{height:8px;opacity:.55}
+.barras .semv{font-size:12px;color:var(--muted);font-style:italic}
+.bar span{display:block;height:100%;min-width:0}
+.bar span:first-child{border-radius:4px 0 0 4px}
+.bar span:last-child{border-radius:0 4px 4px 0}
+.bar span:only-child{border-radius:4px}
+.item .num{text-align:right;font-variant-numeric:tabular-nums}
+.item .num b{font-size:18px;display:block;line-height:1.1}
+.item .num small{font-size:12px;color:var(--muted)}
+.delta{font-weight:700}
+.delta.up{color:var(--ok)}.delta.down{color:var(--des)}
+.oculto{font-size:13px;color:var(--muted);font-style:italic}
+/* tabela de afirmações: Avaliação x Voice */
+.tab .item{grid-template-columns:minmax(0,1fr) minmax(120px,220px) 84px}
+.tab.com-voice .item{grid-template-columns:minmax(0,1fr) minmax(150px,240px) 84px 84px 64px}
+.tab .cab{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:4px 0 6px;border-top:0}
+.tab .cab .num{text-align:right}
+.tab .num.vc b{color:var(--muted)}
+.tab .num.dl b{font-size:15px}
+.tab:not(.com-voice) .vc,.tab:not(.com-voice) .dl{display:none}
+.toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;background:var(--card)}
+.toggle[aria-pressed="true"]{background:var(--brand-soft);color:var(--brand);border-color:var(--brand)}
+.toggle .sw2{width:30px;height:18px;border-radius:9px;background:var(--line);position:relative;transition:background .15s}
+.toggle .sw2::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
+.toggle[aria-pressed="true"] .sw2{background:var(--brand)}
+.toggle[aria-pressed="true"] .sw2::after{left:14px}
+@media (max-width:640px){
+  .tab .item,.tab.com-voice .item{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 10px}
+  .tab .item>div:first-child,.tab .item .barras,.tab .item .oculto{grid-column:1/-1}
+  .tab .item .num{text-align:left}
+  .tab .cab{display:none}
+  .tab .item .num small{display:block}
+}
+.resumo-blocos{display:flex;flex-wrap:wrap;gap:8px}
+.rb{flex:1 1 140px;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.rb .n{font-size:22px;font-weight:750;font-variant-numeric:tabular-nums}
+.rb .l{font-size:12px;color:var(--muted)}
+.coments{display:grid;gap:8px}
+.coments .grp{font-size:13px;font-weight:700;margin:10px 0 2px;color:var(--ink2)}
+.coments blockquote{margin:0;padding:10px 12px;border-left:3px solid var(--brand);background:var(--bg);border-radius:0 10px 10px 0;font-size:14px}
+.tip{position:fixed;pointer-events:none;z-index:20;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.4;padding:7px 10px;border-radius:8px;box-shadow:var(--shadow);max-width:240px}
+.login{max-width:420px;margin:12vh auto 0;text-align:center}
+.login input{width:100%;min-height:50px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);padding:0 14px;font-size:18px;text-align:center;letter-spacing:.12em;text-transform:uppercase;margin:14px 0 10px}
+.erro{color:var(--des);font-size:14px;min-height:20px}
+.demo{font-size:12px;color:var(--warn);font-weight:600}
+.vazio{color:var(--muted);font-size:14px}
+.spin{width:36px;height:36px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--brand);animation:sp 1s linear infinite;margin:20vh auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ================= PLANO DE AÇÃO ================= */
+#plano{display:none}
+body.modo-plano #app{display:none}
+body.modo-plano #plano{display:block}
+.pl-wrap{max-width:760px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom))}
+.passos-pl{display:flex;gap:6px;margin:12px 0 4px}
+.passos-pl i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.passos-pl i.on{background:var(--brand)}
+.pl-etapa{font-size:13px;color:var(--muted);margin-bottom:12px}
+.pl-wrap h2{font-size:22px;margin:0 0 6px;line-height:1.25}
+.pl-dica{font-size:14px;color:var(--ink2);background:var(--brand-soft);border-radius:12px;padding:10px 12px;margin:0 0 14px}
+.escolha{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media (max-width:600px){.escolha{grid-template-columns:1fr}}
+.escolha button{text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:18px;cursor:pointer}
+.escolha button:hover{border-color:var(--brand)}
+.escolha b{display:block;font-size:17px;margin-bottom:4px}
+.escolha span{font-size:14px;color:var(--muted)}
+.opc{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;cursor:pointer;background:var(--card)}
+.opc input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--brand)}
+.opc.on{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 7%,var(--card))}
+.opc .tx{font-size:15px;font-weight:600}
+.opc .mt{font-size:13px;color:var(--muted)}
+.opc .pp{margin-left:auto;text-align:right;flex:none;font-weight:800;font-size:18px}
+.foco-h{display:flex;gap:10px;align-items:baseline;margin:18px 0 8px}
+.foco-h .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-size:13px;font-weight:800}
+.foco-h b{font-size:16px}
+.det{display:grid;grid-template-columns:1fr 150px;gap:8px;margin:-2px 0 10px 34px}
+@media (max-width:600px){.det{grid-template-columns:1fr 1fr;margin-left:0}}
+.det label{font-size:12px;color:var(--muted);display:block}
+.inp{width:100%;min-height:42px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);padding:6px 10px;font-size:16px}
+textarea.inp{min-height:70px;resize:vertical}
+.nova{display:flex;gap:8px;margin:4px 0 6px}
+.nova .inp{flex:1}
+.meta-box{border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.meta-box input[type=range]{width:100%;accent-color:var(--brand)}
+.meta-num{display:flex;align-items:baseline;gap:10px;font-variant-numeric:tabular-nums}
+.meta-num b{font-size:28px}
+.rev-f{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.rev-f ul{margin:8px 0 0;padding-left:18px}
+.rev-f li{margin-bottom:4px;font-size:14px}
+.rev-f li small{color:var(--muted)}
+.pl-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center}
+.pl-nav div{max-width:760px;width:100%;display:flex;gap:10px}
+.pl-nav .btn{flex:1;justify-content:center;min-height:46px}
+.pl-nav .btn.sec{flex:0 0 auto}
+.plano-res ol{margin:6px 0 0;padding-left:20px}
+.plano-res li{margin-bottom:8px}
+.plano-res small{color:var(--muted)}
+
+/* ================= APRESENTAÇÃO (slides 16:9) ================= */
+#deck{display:none}
+body.modo-deck #app{display:none}
+body.modo-deck #deck{display:block}
+.deckbar{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:var(--bg);border-bottom:1px solid var(--line)}
+.deckbar .t{font-weight:700;margin-right:auto}
+.deckbar .dica{flex-basis:100%;font-size:12px;color:var(--muted)}
+.slides{padding:16px;display:grid;gap:16px;justify-items:center}
+.sw{width:100%;max-width:1100px;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:10px;box-shadow:var(--shadow);cursor:pointer}
+.sw .slide{position:absolute;top:0;left:0;transform-origin:0 0}
+
+.slide{width:1280px;height:720px;background:#fff;color:#14233a;font-family:Montserrat,system-ui,"Segoe UI",Arial,sans-serif;
+  position:relative;overflow:hidden;padding:56px 72px 64px;display:flex;flex-direction:column;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.slide .eyebrow{font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0b5cab;margin-bottom:10px}
+.slide h2{font-size:40px;line-height:1.15;margin:0 0 26px;font-weight:800;color:#0e1b2e;max-width:1040px}
+.slide .corpo{flex:1;display:flex;gap:36px;min-height:0}
+.slide .col{flex:1;min-width:0;display:flex;flex-direction:column}
+.slide .simples{flex:0 0 330px;align-self:flex-start;background:#eef4fb;border-radius:18px;padding:22px 24px;font-size:18px;line-height:1.5;color:#22344d}
+.slide .simples b.tit{display:block;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#0b5cab;margin-bottom:8px}
+.slide .rod{position:absolute;left:72px;right:72px;bottom:22px;display:flex;justify-content:space-between;font-size:13px;color:#7a889b}
+.slide .rod .parc{color:#b7791f;font-weight:700}
+.slide .faixa{position:absolute;left:0;top:0;bottom:0;width:10px;background:linear-gradient(#0b5cab,#1d8fe0)}
+.slide .grande{font-size:120px;font-weight:800;line-height:1;color:#0b5cab;letter-spacing:-.02em}
+.slide .medio{font-size:26px;font-weight:700;color:#14233a}
+.slide .leve{font-size:20px;color:#55657a;line-height:1.45}
+.slide .ouro{font-family:Lora,Georgia,serif;font-style:italic;color:#a8731a}
+.slide svg text{font-family:Montserrat,system-ui,Arial,sans-serif}
+/* capa e fechamento */
+.slide.escura{background:radial-gradient(1200px 600px at 85% 0%,#123a6b 0,#0a1830 55%,#071225 100%);color:#eef3fa}
+.slide.escura h2{color:#fff}
+.slide.escura .eyebrow{color:#5fb2f2}
+.slide.escura .leve{color:#b8c6d8}
+.slide.escura .ouro{color:#f3c66b}
+.slide.escura .rod{color:#8ea0b8}
+.capa-num{display:flex;gap:56px;margin-top:auto}
+.capa-num div b{display:block;font-size:54px;font-weight:800;line-height:1;color:#fff}
+.capa-num div span{font-size:16px;color:#b8c6d8}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip2{font-size:15px;font-weight:700;padding:6px 14px;border-radius:999px;background:rgba(95,178,242,.15);color:#8fcaf7}
+.chip2.p{background:rgba(243,198,107,.18);color:#f3c66b}
+/* régua */
+.regua{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:6px 0 10px}
+.regua div{border-radius:10px;padding:14px 10px;text-align:center;font-size:15px;font-weight:700;color:#fff;min-height:74px;display:flex;align-items:center;justify-content:center}
+.chaves{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:6px;font-size:16px;font-weight:800;text-align:center}
+.chaves div{padding:8px;border-radius:8px}
+/* cartões de itens */
+.cards3{display:grid;gap:14px}
+.ci{display:flex;gap:18px;align-items:center;border:1.5px solid #e1e8f1;border-radius:16px;padding:16px 20px}
+.ci .p{flex:none;width:104px;font-size:44px;font-weight:800;line-height:1}
+.ci .tx{font-size:20px;font-weight:600;line-height:1.3}
+.ci .ds{font-size:15px;color:#6a7a8f;margin-top:4px}
+/* linhas de itens (barras) */
+.li{display:grid;grid-template-columns:1fr 300px 64px;gap:16px;align-items:center;padding:8px 0;border-top:1px solid #edf1f6}
+.li .tx{font-size:15px;font-weight:600;line-height:1.3}
+.li .bl{font-size:12px;color:#7a889b;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.li .br{display:flex;gap:2px;height:20px}
+.li .br span{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;min-width:0;overflow:hidden}
+.li .br span:first-child{border-radius:5px 0 0 5px}.li .br span:last-child{border-radius:0 5px 5px 0}.li .br span:only-child{border-radius:5px}
+.li .v{text-align:right;font-size:22px;font-weight:800;color:#0b5cab}
+.li.cv{grid-template-columns:1fr 250px 92px 64px 56px}
+.li .vv{text-align:right;font-size:19px;font-weight:700;color:#7a889b}
+.li .vd{text-align:right;font-size:17px;font-weight:800}
+.li.lh{border-top:0;padding:0 0 2px}
+.li.lh .v,.li.lh .vv,.li.lh .vd{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a889b}
+.plcols{display:grid;gap:18px;flex:1}
+.plc{border:1.5px solid #e1e8f1;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;min-height:0}
+.plc .n{width:34px;height:34px;border-radius:50%;background:#0b5cab;color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;margin-bottom:10px}
+.plc .t{font-size:17px;font-weight:700;line-height:1.3;margin-bottom:10px}
+.plc .mt{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;color:#55657a;font-size:14px}
+.plc .mt b{font-size:26px;color:#1e8e5a}
+.plc ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.plc li{font-size:14.5px;line-height:1.35;padding-left:16px;position:relative}
+.plc li::before{content:"";position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:#1d8fe0}
+.plc li small{display:block;color:#7a889b;font-size:12.5px;margin-top:1px}
+.legs{display:flex;gap:18px;font-size:14px;color:#55657a;margin-bottom:6px}
+.legs i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+/* comentários */
+.cmts{columns:2;column-gap:28px}
+.cmts .q{break-inside:avoid;font-size:14px;font-weight:800;color:#0b5cab;letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px}
+.cmts blockquote{break-inside:avoid;margin:0 0 10px;padding:10px 14px;border-left:4px solid #1d8fe0;background:#f4f7fb;border-radius:0 10px 10px 0;font-size:16px;line-height:1.4}
+/* fechamento */
+.preencher{display:grid;grid-template-columns:1fr 1fr;gap:26px;flex:1}
+.preencher .bx{border:2px dashed rgba(255,255,255,.25);border-radius:18px;padding:20px 24px}
+.preencher .bx b{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#5fb2f2}
+.preencher .ln{border-bottom:1.5px solid rgba(255,255,255,.22);height:44px}
+
+/* modo apresentar (tela cheia) */
+.palco{position:fixed;inset:0;background:#05080f;z-index:50;display:none;align-items:center;justify-content:center}
+.palco.on{display:flex}
+.palco .slide{position:absolute;transform-origin:0 0}
+.palco .ctrl{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:rgba(20,30,45,.85);color:#dfe8f3;border-radius:999px;padding:6px 8px;font-size:13px;opacity:.15;transition:opacity .2s}
+.palco:hover .ctrl,.palco .ctrl:focus-within{opacity:1}
+.palco .ctrl button{background:transparent;border:0;color:inherit;min-width:40px;min-height:36px;border-radius:999px;cursor:pointer;font-size:18px}
+.palco .ctrl button:hover{background:rgba(255,255,255,.1)}
+
+@page{size:1280px 720px;margin:0}
+@media print{
+  html,body{background:#fff!important}
+  body:not(.modo-deck) .top .acoes,body:not(.modo-deck) .filtros,.no-print{display:none!important}
+  .card,.status{box-shadow:none;break-inside:avoid}
+  body.modo-deck .deckbar,body.modo-deck .palco{display:none!important}
+  body.modo-deck .slides{padding:0;display:block}
+  body.modo-deck .sw{width:1280px;max-width:none;height:720px;aspect-ratio:auto;border-radius:0;box-shadow:none;break-after:page;page-break-after:always}
+  body.modo-deck .sw .slide{transform:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="spin"></div></div>
+<div class="tip" id="tip" hidden></div>
+<div id="deck"></div>
+<div id="plano"></div>
+<div class="palco" id="palco" role="dialog" aria-label="Apresentação em tela cheia"></div>
+<script>
+/* ======== CONFIGURAÇÃO: a mesma URL /exec do index.html ======== */
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwY6wtu2rxdj4lpGC_88gmSg4Eu8-YSO2E43Hl5piZ39I6rRC6e_f_mWarqAVvXV_fRyQ/exec';
+/* ================================================================ */
+const CHAVE_KEY='conexao_chave_lider';
+const app=document.getElementById('app'), tip=document.getElementById('tip');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=x=>Math.round(100*x)+'%';
+const CEL=matchMedia("(max-width:640px)");
+const ui={pag:0, ordem:'bloco', dados:null, timer:null, voice:(()=>{try{return localStorage.getItem('conexao_mostrar_voice')==='1'}catch(e){return false}})()};
+const icoRef='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>';
+const icoPrint='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>';
+const icoSair='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></svg>';
+
+function lerChave(){try{return localStorage.getItem(CHAVE_KEY)||''}catch(e){return ''}}
+function salvarChave(c){try{c?localStorage.setItem(CHAVE_KEY,c):localStorage.removeItem(CHAVE_KEY)}catch(e){}}
+
+async function buscar(chave){
+  if(!ENDPOINT) return demo();
+  const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({acao:'painel',chave}),headers:{'Content-Type':'text/plain;charset=utf-8'}});
+  return r.json();
+}
+
+function telaLogin(msg=''){
+  clearInterval(ui.timer);
+  app.innerHTML=`<div class="card login">
+    <div class="logo" style="margin:0 auto 12px;width:52px;height:52px;border-radius:14px"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
+    <h1 style="font-size:22px;margin:0">Painel do Líder</h1>
+    <p class="vazio" style="margin:6px 0 0">Conexão Usinagem · acesso restrito</p>
+    <form id="f"><label for="ch" class="vazio" style="display:block;margin-top:16px">Digite a chave do painel</label>
+      <input id="ch" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXXX-XXXXX" required>
+      <div class="erro" id="er">${esc(msg)}</div>
+      <button class="btn pri" style="width:100%;justify-content:center;min-height:48px">Entrar</button></form>
+    <p class="vazio" style="font-size:12px;margin-top:14px">A chave fica na planilha, no menu <b>Conexão &gt; Mostrar chave do painel</b>. Ela é lembrada neste aparelho.</p>
+  </div>`;
+  document.getElementById('f').onsubmit=async e=>{e.preventDefault();const c=document.getElementById('ch').value.trim().toUpperCase();
+    document.getElementById('er').textContent='Verificando…';await carregar(c,true)};
+  document.getElementById('ch').focus();
+}
+
+async function carregar(chave,login){
+  try{
+    const d=await buscar(chave);
+    if(!d.ok){salvarChave('');return telaLogin(d.codigo==='chave'?'Chave inválida.':'Erro: '+(d.erro||'desconhecido'))}
+    salvarChave(chave);ui.dados=d;render();
+    clearInterval(ui.timer);
+    if(d.status!=='encerrada') ui.timer=setInterval(()=>carregar(chave),60000);
+  }catch(e){
+    if(login||!ui.dados) telaLogin('Sem conexão com a planilha. Verifique a internet e a URL.');
+    else toastLinha('Sem conexão: mostrando os últimos dados carregados.');
+  }
+}
+function toastLinha(t){const el=document.getElementById('aviso');if(el)el.textContent=t}
+
+/* ---------------- render ---------------- */
+function render(){
+  const d=ui.dados, fechada=d.status==='encerrada';
+  app.innerHTML=`
+  <header class="top">
+    <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
+    <div><h1>Painel do Líder · Conexão Usinagem</h1><div class="s">${esc(d.campanha||'pesquisa')} · atualizado ${esc(d.geradoEm)} ${!ENDPOINT?'· <span class="demo">DADOS DE EXEMPLO</span>':''}</div></div>
+    <div class="acoes">
+      <button class="btn" id="bRef" title="Atualizar">${icoRef}<span>Atualizar</span></button>
+      <button class="btn pri" id="bPri" title="Slides para apresentar ou salvar em PDF">${icoPrint}<span>Apresentação</span></button>
+      <button class="btn" id="bSair" title="Sair e esquecer a chave neste aparelho" aria-label="Sair">${icoSair}</button>
+    </div>
+  </header>
+
+  <div class="status">
+    <span class="tag ${fechada?'encerrada':'aberta'}">${fechada?'Resultado final':'Aberta · parcial'}</span>
+    <p>${fechada
+      ?`Pesquisa encerrada${d.encerradaEm?' em '+esc(d.encerradaEm):''}. Todos os números abaixo são finais e os comentários estão liberados.`
+      :`Os resultados atualizam a cada <b>${d.blocoParcial} respostas</b>, para proteger o anonimato. Base atual: <b>${d.base}</b> respostas${d.base<d.minRespostas?'':''}. ${d.proximaAtualizacao>0?`Faltam <b>${d.proximaAtualizacao}</b> para a próxima atualização.`:''} Os comentários só aparecem quando você encerrar.`}
+    <span id="aviso" class="demo" style="display:block"></span></p>
+  </div>
+
+  <section class="grid kpis">
+    <div class="card kpi k1">
+      ${anel(d.adesao)}
+      <div><div class="lbl">Adesão</div><div class="val">${pct(d.adesao)}</div>
+      <div class="det">${d.respostas} de ${d.time} pessoas responderam<br>Voice 2026: 94% (29 de 31)</div></div>
+    </div>
+    <div class="card kpi"><div class="lbl">Favorável médio</div><div class="val">${mediaFav(d)}</div><div class="det">média das afirmações com resultado</div></div>
+    <div class="card kpi"><div class="lbl">Abaixo de 50%</div><div class="val">${d.itens.filter(i=>!i.oculto&&i.fav<.5).length}</div><div class="det">afirmações em alerta</div></div>
+  </section>
+
+  <section class="grid duas" style="margin-top:14px">
+    <div class="card chart"><h2>Evolução da adesão</h2><p class="sub">% do time que já respondeu, dia a dia</p>${evolucao(d)}</div>
+    <div class="card"><h2>Por bloco</h2><p class="sub">% favorável médio de cada tema</p>${porBloco(d)}</div>
+  </section>
+
+  <section class="card" id="secItens" style="margin-top:14px">
+    <h2>Resultado por afirmação</h2>
+    <p class="sub">Mesma régua do Voice: favorável = concordo e concordo totalmente.</p>
+    <div class="leg"><span><i style="background:var(--des)"></i>Desfavorável (discordo)</span><span><i style="background:var(--par)"></i>Parcial (concordo parcialmente)</span><span><i style="background:var(--fav)"></i>Favorável</span></div>
+    <div class="filtros no-print"><div class="seg" role="group" aria-label="Ordenar">
+      <button data-o="bloco" aria-pressed="${ui.ordem==='bloco'}">Por bloco</button>
+      <button data-o="pior" aria-pressed="${ui.ordem==='pior'}">Pior primeiro</button>
+      ${ui.voice?`<button data-o="voice" aria-pressed="${ui.ordem==='voice'}">Maior evolução</button>`:''}</div>
+      <button class="toggle" id="tVoice" aria-pressed="${ui.voice}"><span class="sw2"></span>Mostrar Voice</button></div>
+    ${itens(d)}
+  </section>
+
+  <section class="card" style="margin-top:14px">
+    <h2>Comentários</h2>
+    ${fechada?comentarios(d):`<p class="vazio">Liberados quando a pesquisa for encerrada (menu <b>Conexão &gt; Encerrar pesquisa</b> na planilha). Assim, ninguém é identificado pela ordem de chegada.</p>`}
+  </section>
+
+  <section class="card plano-res" style="margin-top:14px">
+    <h2>Plano de ação</h2>
+    ${d.plano?resumoPlano(d.plano)+`<div class="nav" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn" id="pEdit">Editar plano</button><button class="btn" id="pDeck">Ver na apresentação</button></div>`
+      :`<p class="sub">${fechada?'A pesquisa está encerrada: é hora de transformar o resultado em compromissos.':'Você pode montar um <b>rascunho</b> com os parciais e revisar quando encerrar.'}</p>
+      <div class="escolha"><button id="pAuto"><b>⚡ Gerar automático</b><span>O app escolhe os 3 pontos mais críticos e sugere ações. Você revisa antes de salvar.</span></button>
+      <button id="pGuia"><b>🧭 Montar passo a passo</b><span>Você escolhe os focos, as ações, os responsáveis, os prazos e as metas, com dicas em cada etapa.</span></button></div>`}
+  </section>`;
+  const on=(id,fn)=>{const el=document.getElementById(id);if(el)el.onclick=fn};
+  on('pAuto',()=>{ui.plano=planoAuto(d);abrirPlano(4)});
+  on('pGuia',()=>{ui.plano={modo:'conduzido',focos:[]};abrirPlano(1)});
+  on('pEdit',()=>{ui.plano=JSON.parse(JSON.stringify(d.plano));abrirPlano(4)});
+  on('pDeck',abrirDeck);
+
+  document.getElementById('bRef').onclick=()=>carregar(lerChave());
+  document.getElementById('bPri').onclick=abrirDeck;
+  document.getElementById('bSair').onclick=()=>{salvarChave('');telaLogin()};
+  app.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{ui.ordem=b.dataset.o;ui.pag=0;render()});
+  const irPag=k=>{ui.pag=k;render();const sec=document.getElementById("secItens");if(sec){sec.scrollIntoView({block:"start"});const h=sec.querySelector(".etq b");if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true})}}};
+  app.querySelectorAll("[data-pag]").forEach(b=>b.onclick=()=>irPag(+b.dataset.pag));
+  const pgI=document.getElementById("pagItens");
+  if(pgI){let x0=null,y0=0;const n=app.querySelectorAll(".etapas .sg").length;
+    pgI.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+    pgI.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
+      if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy)){const k=ui.pag+(dx<0?1:-1);if(k>=0&&k<n)irPag(k)}})}
+  document.getElementById('tVoice').onclick=()=>{ui.voice=!ui.voice;if(!ui.voice&&ui.ordem==='voice'){ui.ordem='bloco';ui.pag=0}
+    try{localStorage.setItem('conexao_mostrar_voice',ui.voice?'1':'0')}catch(e){}render()};
+  ligarTips();
+}
+
+function mediaFav(d){const v=d.itens.filter(i=>!i.oculto);return v.length?pct(v.reduce((a,i)=>a+i.fav,0)/v.length):'—'}
+
+function anel(x){
+  const r=40,c=2*Math.PI*r,v=Math.max(0,Math.min(1,x));
+  return `<svg class="ring" viewBox="0 0 96 96" role="img" aria-label="Adesão ${pct(x)}">
+    <circle cx="48" cy="48" r="${r}" fill="none" stroke="var(--grid)" stroke-width="9"/>
+    <circle cx="48" cy="48" r="${r}" fill="none" stroke="var(--brand)" stroke-width="9" stroke-linecap="round"
+      stroke-dasharray="${c*v} ${c}" transform="rotate(-90 48 48)"/></svg>`;
+}
+
+function evolucao(d){
+  if(!d.porDia.length) return '<p class="vazio">Ainda sem respostas.</p>';
+  const W=520,H=200,L=36,R=12,T=10,B=26,iw=W-L-R,ih=H-T-B;
+  let acc=0;const pts=d.porDia.map(p=>{acc+=p.n;return {...p,acc,ad:acc/d.time}});
+  const n=pts.length, x=i=>L+(n===1?iw/2:i*iw/(n-1)), y=v=>T+ih*(1-Math.min(1,v));
+  const grid=[0,.25,.5,.75,1].map(g=>`<line x1="${L}" x2="${W-R}" y1="${y(g)}" y2="${y(g)}" stroke="var(--grid)"/><text x="${L-6}" y="${y(g)+4}" text-anchor="end">${g*100}%</text>`).join('');
+  const meta=`<line x1="${L}" x2="${W-R}" y1="${y(.94)}" y2="${y(.94)}" stroke="var(--muted)" stroke-dasharray="4 4"/><text x="${W-R}" y="${y(.94)-5}" text-anchor="end">Voice 94%</text>`;
+  const linha=pts.map((p,i)=>`${i?'L':'M'}${x(i)},${y(p.ad)}`).join(' ');
+  const area=`${linha} L${x(n-1)},${y(0)} L${x(0)},${y(0)} Z`;
+  const fmt=s=>s.slice(8,10)+'/'+s.slice(5,7);
+  const passo=Math.ceil(n/6);
+  const labels=pts.map((p,i)=>i%passo===0||i===n-1?`<text x="${x(i)}" y="${H-6}" text-anchor="middle">${fmt(p.data)}</text>`:'').join('');
+  const dots=pts.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.ad)}" r="4" fill="var(--brand)" stroke="var(--card)" stroke-width="2"/>
+    <rect x="${x(i)-Math.max(10,iw/n/2)}" y="${T}" width="${Math.max(20,iw/n)}" height="${ih}" fill="transparent" data-tip="<b>${fmt(p.data)}</b><br>+${p.n} no dia<br>${p.acc} de ${d.time} no total (${pct(p.ad)})"/>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Adesão acumulada por dia, chegando a ${pct(pts[n-1].ad)}">
+    ${grid}${meta}<path d="${area}" fill="var(--brand)" opacity=".12"/><path d="${linha}" fill="none" stroke="var(--brand)" stroke-width="2"/>${dots}${labels}</svg>`;
+}
+
+function porBloco(d){
+  const bl={};d.itens.filter(i=>!i.oculto).forEach(i=>{(bl[i.bloco]=bl[i.bloco]||[]).push(i.fav)});
+  const ks=Object.keys(bl);
+  if(!ks.length) return `<p class="vazio">Aparece quando houver pelo menos ${d.minRespostas} respostas na base.</p>`;
+  return `<div class="resumo-blocos">${ks.map(k=>{const m=bl[k].reduce((a,b)=>a+b,0)/bl[k].length;
+    return `<div class="rb"><div class="n">${pct(m)}</div><div class="l">${esc(k)}</div></div>`}).join('')}</div>`;
+}
+
+const voicePct=v=>{const m=/(\d+)%/.exec(v||'');return m?+m[1]/100:null};
+
+function itens(d){
+  let lista=d.itens.slice();
+  if(ui.ordem==='pior') lista.sort((a,b)=>(a.oculto?2:a.fav)-(b.oculto?2:b.fav));
+  if(ui.ordem==='voice') lista=lista.filter(i=>voicePct(i.voice)!==null).sort((a,b)=>((b.oculto?-9:b.fav)-voicePct(b.voice))-((a.oculto?-9:a.fav)-voicePct(a.voice)));
+  const cab=`<div class="item cab"><div>Afirmação</div><div>Distribuição</div><div class="num">Avaliação</div><div class="num vc">Voice 2026</div><div class="num dl">Evolução</div></div>`;
+  const linha=i=>{
+    const vp=voicePct(i.voice);
+    if(i.oculto) return `<div class="item"><div><div class="tx">${esc(i.texto)}</div></div><div class="oculto">aguardando ${d.minRespostas} respostas</div></div>`;
+    const dl=vp===null?null:Math.round(100*(i.fav-vp));
+    return `<div class="item">
+      <div class="tx">${esc(i.texto)}</div>
+      <div class="barras">${ui.voice?"<span class=\"rl\">Agora</span>":""}<div class="bar" role="img" aria-label="Agora: desfavorável ${pct(i.des)}, parcial ${pct(i.par)}, favorável ${pct(i.fav)}">
+        ${[["des",i.des,"Desfavorável"],["par",i.par,"Parcial"],["fav",i.fav,"Favorável"]].filter(s=>s[1]>0).map(s=>
+          `<span style="flex:${s[1]};background:var(--${s[0]})" data-tip="<b>${s[2]}</b>: ${pct(s[1])} (${Math.round(s[1]*i.n)} de ${i.n})"></span>`).join("")}
+      </div>${ui.voice?(vp===null?"<span class=\"rl\">Voice</span><span class=\"semv\">pergunta nova</span>"
+        :`<span class="rl">Voice</span><div class="bar vbar" role="img" aria-label="Voice 2026: favorável ${pct(vp)}">${[["des",1-vp,"Não favorável"],["fav",vp,"Favorável"]].filter(s=>s[1]>0).map(s=>`<span style="flex:${s[1]};background:var(--${s[0]})" data-tip="<b>Voice 2026 · ${s[2]}</b>: ${pct(s[1])}"></span>`).join("")}</div>`):""}</div>
+      <div class="num"><b>${pct(i.fav)}</b><small>avaliação</small></div>
+      <div class="num vc"><b>${vp===null?'—':pct(vp)}</b><small>Voice</small></div>
+      <div class="num dl"><b class="delta ${dl>0?'up':dl<0?'down':''}">${dl===null?'—':(dl>0?'+':'')+dl}</b><small>${dl===null?'sem par':'pontos'}</small></div></div>`;
+  };
+  const cls=`tab${ui.voice?" com-voice":""}`;
+  // No celular: uma etapa por vez (um bloco, ou 5 afirmações nas outras ordens), com barra de progresso.
+  if(CEL.matches){
+    const pags=ui.ordem==="bloco"?[...new Set(lista.map(i=>i.bloco))].map(b=>({t:b,its:lista.filter(i=>i.bloco===b)}))
+      :Array.from({length:Math.ceil(lista.length/5)},(_,k)=>({t:`Afirmações ${5*k+1} a ${Math.min(lista.length,5*k+5)}`,its:lista.slice(5*k,5*k+5)}));
+    if(!pags.length)return `<p class="vazio">Nenhuma afirmação para mostrar.</p>`;
+    ui.pag=Math.max(0,Math.min(ui.pag,pags.length-1));const p=ui.pag,ult=p===pags.length-1;
+    const nome=ui.ordem==="bloco"?"Bloco":"Parte";
+    return `<div class="etapas" role="tablist" aria-label="Etapas">${pags.map((g,k)=>`<button role="tab" class="sg ${k<p?"feito":k===p?"atual":""}" aria-selected="${k===p}" data-pag="${k}" aria-label="${esc(g.t)}"></button>`).join("")}</div>
+      <div class="etq"><span>${nome} ${p+1} de ${pags.length}${ult?"":" · depois: "+esc(pags[p+1].t)}</span><b>${esc(pags[p].t)}</b></div>
+      <div class="${cls}" id="pagItens">${pags[p].its.map(linha).join("")}</div>
+      <div class="pnav"><button class="pb sec" data-pag="${p-1}" ${p===0?"disabled":""}>‹ Anterior</button>
+        <button class="pb${ult?" sec":""}" data-pag="${ult?0:p+1}">${ult?"Voltar ao início ↺":"Próximo ›"}</button></div>`;
+  }
+  if(ui.ordem!=='bloco') return `<div class="${cls}">${cab}${lista.map(linha).join('')}</div>`;
+  const bl=[...new Set(lista.map(i=>i.bloco))];
+  return `<div class="${cls}">${cab}${bl.map(b=>`<div class="bloco"><h3>${esc(b)}</h3>${lista.filter(i=>i.bloco===b).map(linha).join('')}</div>`).join('')}</div>`;
+}
+
+function comentarios(d){
+  if(!d.comentarios.length) return '<p class="vazio">Nenhum comentário escrito.</p>';
+  const g={};d.comentarios.forEach(c=>(g[c.pergunta]=g[c.pergunta]||[]).push(c.texto));
+  return `<div class="coments">${Object.keys(g).map(k=>`<div class="grp">${esc(k)} <span class="vazio">(${g[k].length})</span></div>${g[k].map(t=>`<blockquote>${esc(t)}</blockquote>`).join('')}`).join('')}</div>`;
+}
+
+function ligarTips(){
+  app.querySelectorAll('[data-tip]').forEach(el=>{
+    const show=e=>{tip.innerHTML=el.getAttribute('data-tip');tip.hidden=false;mover(e)};
+    const mover=e=>{const p=e.touches?e.touches[0]:e;const w=tip.offsetWidth;tip.style.left=Math.min(innerWidth-w-8,Math.max(8,p.clientX+12))+'px';tip.style.top=(p.clientY+14)+'px'};
+    el.addEventListener('mouseenter',show);el.addEventListener('mousemove',mover);el.addEventListener('mouseleave',()=>tip.hidden=true);
+    el.addEventListener('touchstart',show,{passive:true});
+  });
+}
+document.addEventListener('touchstart',e=>{if(!e.target.closest('[data-tip]'))tip.hidden=true},{passive:true});
+
+/* ================= PLANO DE AÇÃO ================= */
+// Biblioteca de ações sugeridas por afirmação (ajuste à vontade).
+const ACOES={
+ q1:['Abrir a reunião de turno perguntando "o que eu fiz que atrapalhou vocês?" e agradecer quem falar','Nunca rebater uma crítica na hora: anotar e responder em até 1 semana','Conversa individual de 15 minutos com cada pessoa a cada 2 meses','Caixa de sugestões e críticas anônima (física ou por QR code)'],
+ q2:['Quadro de ideias visível: Ideia / O que decidimos / Por quê','Responder toda ideia em até 2 semanas, mesmo que a resposta seja não','Reconhecer no diálogo de segurança quem deu ideias que foram implantadas'],
+ q3:['Melhoria do mês: cada turno escolhe e implanta uma melhoria no posto','Reservar 30 minutos por mês para melhorias no posto','Dar autonomia para pequenas melhorias sem precisar de aprovação'],
+ q4:['Fazer 2 a 3 reconhecimentos específicos por semana (o que fez + o impacto)','Registrar elogios nos cartões do sistema de avaliação','Destaque do mês escolhido pelo próprio time'],
+ q5:['Feedback rápido no posto toda semana: 1 ponto forte + 1 ajuste','Conversa individual a cada 2 meses, com registro','Agenda de feedback visível por turno'],
+ q6:['Conversa individual com quem recebeu C: explicar a nota e combinar um plano de 90 dias','Explicar ao time os critérios A/B/C com exemplos do dia a dia','Revisar o plano de 90 dias na metade do prazo'],
+ q7:['Matriz de competências visível (pessoas × máquinas)','Definir com cada pessoa o próximo passo de aprendizado','Trilha por cargo: o que é preciso para chegar ao próximo nível'],
+ q8:['Rodízio planejado de postos e máquinas','Treinamento em dupla no posto com os técnicos de referência','Indicar treinamentos (SENAI ou internos) a pelo menos 1 pessoa por mês'],
+ q9:['Construir com o time combinados de convivência','Agir rápido diante de brincadeiras ou atitudes desrespeitosas','Integração de novatos com um padrinho'],
+ q10:['Meta compartilhada do turno visível no quadro','Passagem de turno estruturada (5 minutos)','Celebrar com o turno quando a meta for batida'],
+ q11:['Mediar desentendimentos em conversa reservada, ouvindo os dois lados','Combinar com o time como resolver divergências','Deixar claro que a liderança do time é do líder, sem chefias informais'],
+ q12:['Ronda diária nos postos em horário fixo','Horário de "porta aberta" semanal','Estar presente na troca de turno'],
+ q13:['Critérios claros e públicos para hora extra, folgas e treinamentos','Mesma regra para todos, sem exceções informais','Explicar as decisões que afetam o time'],
+ q14:['Aplicar os combinados (celular, rodinhas) com consistência','Conversa formal registrada quando houver reincidência','Reforçar as regras no diálogo de segurança'],
+ q15:['Mostrar ao time o impacto do trabalho (cliente, resultado)','Ligar as metas do turno ao reconhecimento','Perguntar a cada pessoa o que mais tira a motivação dela']
+};
+const dmais=dias=>{const t=new Date();t.setDate(t.getDate()+dias);return t.toISOString().slice(0,10)};
+const dBR=s=>s&&s.length>=10?s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(0,4):(s||'');
+const metaPad=a=>Math.min(.9,Math.ceil((a+.15)*20)/20);
+const COMUNICAR='Apresentar no diálogo de segurança e mostrar a evolução no quadro do turno.';
+
+function candidatos(d){
+  return d.itens.filter(i=>!i.oculto).slice().sort((a,b)=>a.fav-b.fav||((voicePct(b.voice)||0)-b.fav)-((voicePct(a.voice)||0)-a.fav));
+}
+function novoFoco(i){return {id:i.id,bloco:i.bloco,texto:i.texto,atual:i.fav,voice:voicePct(i.voice),meta:metaPad(i.fav),comunicar:COMUNICAR,acoes:[]}}
+function planoAuto(d){
+  const focos=candidatos(d).slice(0,3).map((i,k)=>{const f=novoFoco(i);
+    f.acoes=(ACOES[i.id]||[]).slice(0,2).map((t,j)=>({txt:t,resp:'Líder',prazo:dmais(30*(j+1))}));return f});
+  return {modo:'automático',focos};
+}
+function resumoPlano(p){
+  return `<p class="sub">${p.salvoEm?'Salvo em '+esc(p.salvoEm)+' · ':''}${p.focos.length} foco(s)</p><ol>${p.focos.map(f=>`<li><b>${esc(f.texto)}</b><br>
+    <small>de ${pct(f.atual)} para ${pct(f.meta)} · ${f.acoes.length} ação(ões)${f.acoes[0]?' · 1ª: '+esc(f.acoes[0].txt)+' ('+esc(f.acoes[0].resp)+', '+dBR(f.acoes[0].prazo)+')':''}</small></li>`).join('')}</ol>`;
+}
+
+let plEtapa=1;
+function abrirPlano(etapa){plEtapa=etapa;clearInterval(ui.timer);document.body.classList.add('modo-plano');renderPlano();window.scrollTo(0,0)}
+function fecharPlano(){document.body.classList.remove('modo-plano');document.getElementById('plano').innerHTML='';render();
+  const c=lerChave();if(ui.dados&&ui.dados.status!=='encerrada')ui.timer=setInterval(()=>carregar(c),60000)}
+
+function renderPlano(){
+  const d=ui.dados,p=ui.plano,el=document.getElementById('plano');
+  const nomes=['','Escolha os focos','Escolha as ações','Defina metas e comunicação','Revise e salve'];
+  let corpo='';
+  if(plEtapa===1){
+    const c=candidatos(d);
+    corpo=`<h2>Onde vamos agir primeiro?</h2>
+      <p class="pl-dica">💡 <b>Menos é mais:</b> escolha até <b>3 focos</b> que o time consiga sentir no dia a dia. A lista está ordenada da menor concordância para a maior.</p>
+      ${c.map(i=>{const sel=p.focos.some(f=>f.id===i.id),vp=voicePct(i.voice);return `<label class="opc ${sel?'on':''}"><input type="checkbox" data-f="${i.id}" ${sel?'checked':''}>
+        <div><div class="tx">${esc(i.texto)}</div><div class="mt">${esc(i.bloco)}${vp!==null?' · Voice '+pct(vp):''}</div></div>
+        <div class="pp" style="color:${i.fav<.5?'var(--des)':'var(--fav)'}">${pct(i.fav)}</div></label>`}).join('')}`;
+  }
+  if(plEtapa===2){
+    corpo=`<h2>O que vamos fazer?</h2>
+      <p class="pl-dica">💡 Marque as ações sugeridas ou escreva as suas. Toda ação precisa de <b>quem</b> e <b>até quando</b>. Prefira coisas pequenas e visíveis.</p>
+      ${p.focos.map((f,k)=>{const sug=(ACOES[f.id]||[]);const extras=f.acoes.filter(a=>!sug.includes(a.txt));
+        return `<div class="foco-h"><span class="n">${k+1}</span><b>${esc(f.texto)}</b></div>
+        ${[...sug,...extras.map(a=>a.txt)].map(t=>{const a=f.acoes.find(x=>x.txt===t);return `<label class="opc ${a?'on':''}"><input type="checkbox" data-a="${k}" data-t="${esc(t)}" ${a?'checked':''}><div class="tx">${esc(t)}</div></label>
+          ${a?`<div class="det"><div><label>Responsável</label><input class="inp" data-r="${k}" data-t="${esc(t)}" value="${esc(a.resp)}"></div>
+          <div><label>Prazo</label><input class="inp" type="date" data-p="${k}" data-t="${esc(t)}" value="${esc(a.prazo)}"></div></div>`:''}`}).join('')}
+        <div class="nova"><input class="inp" id="nova${k}" placeholder="Escrever outra ação…" maxlength="160"><button class="btn" data-add="${k}">Adicionar</button></div>`}).join('')}`;
+  }
+  if(plEtapa===3){
+    corpo=`<h2>Aonde queremos chegar?</h2>
+      <p class="pl-dica">💡 A meta é o % favorável na <b>próxima rodada</b>. Uma melhora de 10 a 15 pontos já é um ótimo resultado.</p>
+      ${p.focos.map((f,k)=>`<div class="meta-box"><div class="foco-h" style="margin-top:0"><span class="n">${k+1}</span><b>${esc(f.texto)}</b></div>
+        <div class="meta-num"><span class="vazio">de ${pct(f.atual)} para</span><b id="mv${k}">${pct(f.meta)}</b>${f.voice!==null?`<span class="vazio">(Voice: ${pct(f.voice)})</span>`:''}</div>
+        <input type="range" min="${Math.round(f.atual*100)}" max="100" step="5" value="${Math.round(f.meta*100)}" data-m="${k}" aria-label="Meta">
+        <label class="vazio" style="font-size:13px;display:block;margin-top:8px">Como vamos contar ao time?</label>
+        <textarea class="inp" data-c="${k}" maxlength="240">${esc(f.comunicar)}</textarea></div>`).join('')}`;
+  }
+  if(plEtapa===4){
+    corpo=`<h2>Seu plano de ação</h2>
+      <p class="pl-dica">💡 ${p.modo==='automático'?'Este plano foi <b>gerado automaticamente</b>. Revise, ajuste o que quiser pelos botões abaixo e salve.':'Confira tudo. Depois de salvar, o plano aparece no painel, na apresentação e na planilha.'}</p>
+      ${p.focos.length?p.focos.map((f,k)=>`<div class="rev-f"><div class="foco-h" style="margin:0"><span class="n">${k+1}</span><b>${esc(f.texto)}</b></div>
+        <div class="vazio" style="font-size:13px;margin:4px 0 0 34px">Meta: de ${pct(f.atual)} para <b>${pct(f.meta)}</b> · ${esc(f.comunicar)}</div>
+        <ul>${f.acoes.map(a=>`<li>${esc(a.txt)} <small>— ${esc(a.resp)}, até ${dBR(a.prazo)}</small></li>`).join('')||'<li><small>Nenhuma ação escolhida.</small></li>'}</ul></div>`).join('')
+        :'<p class="vazio">Nenhum foco escolhido.</p>'}
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-ir="1">Mudar focos</button><button class="btn" data-ir="2">Mudar ações</button><button class="btn" data-ir="3">Mudar metas</button></div>`;
+  }
+  const podeAvancar=plEtapa===1?p.focos.length>0:plEtapa===2?p.focos.every(f=>f.acoes.length>0):true;
+  el.innerHTML=`<div class="pl-wrap">
+    <header class="top"><div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
+      <div><h1>Plano de ação</h1><div class="s">Conexão Usinagem${d.status==='encerrada'?'':' · rascunho com parciais'}</div></div></header>
+    <div class="passos-pl">${[1,2,3,4].map(n=>`<i class="${n<=plEtapa?'on':''}"></i>`).join('')}</div>
+    <div class="pl-etapa">Etapa ${plEtapa} de 4 · ${nomes[plEtapa]}</div>
+    ${corpo}</div>
+    <div class="pl-nav"><div>
+      <button class="btn sec" id="plVolta">${plEtapa===1||plEtapa===4?'Cancelar':'‹ Voltar'}</button>
+      ${plEtapa<4?`<button class="btn pri" id="plAvanca" ${podeAvancar?'':'disabled'}>${plEtapa===3?'Revisar':'Próximo ›'}</button>`
+        :`<button class="btn pri" id="plSalvar" ${p.focos.length?'':'disabled'}>Salvar plano</button>`}
+    </div></div>`;
+  ligarPlano();
+}
+
+function ligarPlano(){
+  const p=ui.plano,el=document.getElementById('plano'),d=ui.dados;
+  el.querySelectorAll('[data-f]').forEach(c=>c.onchange=()=>{
+    const id=c.dataset.f;
+    if(c.checked){if(p.focos.length>=3){c.checked=false;return alert('Escolha no máximo 3 focos.')}
+      p.focos.push(novoFoco(d.itens.find(i=>i.id===id)))}
+    else p.focos=p.focos.filter(f=>f.id!==id);
+    renderPlano()});
+  el.querySelectorAll('[data-a]').forEach(c=>c.onchange=()=>{const f=p.focos[+c.dataset.a],t=c.dataset.t;
+    if(c.checked)f.acoes.push({txt:t,resp:'Líder',prazo:dmais(30*(f.acoes.length+1))});else f.acoes=f.acoes.filter(a=>a.txt!==t);
+    const y=scrollY;renderPlano();scrollTo(0,y)});
+  el.querySelectorAll('[data-r]').forEach(i=>i.oninput=()=>{p.focos[+i.dataset.r].acoes.find(a=>a.txt===i.dataset.t).resp=i.value});
+  el.querySelectorAll('[data-p]').forEach(i=>i.onchange=()=>{p.focos[+i.dataset.p].acoes.find(a=>a.txt===i.dataset.t).prazo=i.value});
+  el.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const k=+b.dataset.add,inp=document.getElementById('nova'+k),t=inp.value.trim();
+    if(!t)return;const f=p.focos[k];if(!f.acoes.some(a=>a.txt===t))f.acoes.push({txt:t,resp:'Líder',prazo:dmais(30)});const y=scrollY;renderPlano();scrollTo(0,y)});
+  el.querySelectorAll('[data-m]').forEach(r=>r.oninput=()=>{const f=p.focos[+r.dataset.m];f.meta=+r.value/100;document.getElementById('mv'+r.dataset.m).textContent=pct(f.meta)});
+  el.querySelectorAll('[data-c]').forEach(t=>t.oninput=()=>{p.focos[+t.dataset.c].comunicar=t.value});
+  el.querySelectorAll('[data-ir]').forEach(b=>b.onclick=()=>{plEtapa=+b.dataset.ir;renderPlano();scrollTo(0,0)});
+  const on=(id,fn)=>{const x=document.getElementById(id);if(x)x.onclick=fn};
+  on('plVolta',()=>{if(plEtapa===1||plEtapa===4){if(confirm('Sair sem salvar as mudanças do plano?'))fecharPlano()}else{plEtapa--;renderPlano();scrollTo(0,0)}});
+  on('plAvanca',()=>{plEtapa++;renderPlano();scrollTo(0,0)});
+  on('plSalvar',salvarPlano);
+}
+
+async function salvarPlano(){
+  const p=ui.plano;p.salvoEm=new Date().toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
+  p.base=ui.dados.status==='encerrada'?'final':'parcial';
+  const b=document.getElementById('plSalvar');b.disabled=true;b.textContent='Salvando…';
+  try{
+    if(ENDPOINT){
+      const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({acao:'salvarPlano',chave:lerChave(),plano:p}),headers:{'Content-Type':'text/plain;charset=utf-8'}});
+      const j=await r.json();if(!j.ok)throw new Error(j.erro||'falha');
+    } else { try{localStorage.setItem('conexao_plano_demo',JSON.stringify(p))}catch(e){} }
+    ui.dados.plano=JSON.parse(JSON.stringify(p));fecharPlano();
+  }catch(e){alert('Não consegui salvar: '+e.message+'. Verifique a internet e tente de novo.');b.disabled=false;b.textContent='Salvar plano'}
+}
+
+/* ================= APRESENTAÇÃO ================= */
+const FRASE_DECK=['O Reino de Deus na dinâmica da vida.','Onde suficiências e necessidades se complementam!'];
+const COR={des:'#d9692f',par:'#a9b3c0',fav:'#1f6fd1',voice:'#9aa6b6',azul:'#0b5cab'};
+const ESC6=[['Discordo totalmente','#b8403a'],['Discordo','#d4603f'],['Discordo parcialmente','#e08a3c'],['Concordo parcialmente','#c9a227'],['Concordo','#55a86f'],['Concordo totalmente','#1e8e5a']];
+const qtd=(x,n)=>Math.round(x*n);
+const dataBR=s=>s?s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(0,4):'';
+
+function slidesHTML(d){
+  const fechada=d.status==='encerrada';
+  const vis=d.itens.filter(i=>!i.oculto);
+  const S=[];
+  const simples=t=>`<div class="simples"><b class="tit">Em palavras simples</b>${t}</div>`;
+  const dias=d.porDia.map(p=>p.data);
+  const periodo=dias.length?(dias.length>1?dataBR(dias[0])+' a '+dataBR(dias[dias.length-1]):dataBR(dias[0])):'';
+
+  // 1. Capa
+  S.push({cls:'escura',html:`<div class="faixa"></div>
+    <div class="chips"><span class="chip2">Conexão Usinagem</span>${fechada?'<span class="chip2">Resultado final</span>':'<span class="chip2 p">Resultado parcial</span>'}</div>
+    <h2 style="font-size:64px;margin:60px 0 14px;max-width:980px">O que o time está dizendo</h2>
+    <p class="leve" style="font-size:24px;max-width:860px;margin:0">Pesquisa anônima sobre voz, reconhecimento, desenvolvimento, colegas e liderança, acompanhando os temas do Voice 2026.</p>
+    <div class="capa-num">
+      <div><b>${pct(d.adesao)}</b><span>de participação</span></div>
+      <div><b>${d.respostas}<small style="font-size:28px;color:#8ea0b8"> / ${d.time}</small></b><span>pessoas responderam</span></div>
+      <div><b>${vis.length}</b><span>afirmações avaliadas</span></div>
+    </div>`});
+
+  // 2. Como ler
+  S.push({html:`<div class="eyebrow">Antes de começar</div><h2>Como ler os resultados</h2>
+    <div class="corpo"><div class="col">
+      <p class="leve" style="margin:0 0 14px">Cada pessoa leu frases e escolheu uma das 6 respostas:</p>
+      <div class="regua">${ESC6.map(([t,c])=>`<div style="background:${c}">${t}</div>`).join('')}</div>
+      <div class="chaves">
+        <div style="background:#fbe9df;color:${COR.des}">DESFAVORÁVEL</div>
+        <div style="background:#eef1f5;color:#5d6a7b">PARCIAL<br><span style="font-weight:600;font-size:13px">"concordo parcialmente"</span></div>
+        <div style="background:#e4eefb;color:${COR.fav}">FAVORÁVEL</div>
+      </div>
+      <p class="leve" style="margin:22px 0 0">Usamos a <b>mesma régua do Voice</b>: só conta como favorável quem marcou <b>concordo</b> ou <b>concordo totalmente</b>. O "parcial" aparece separado, porque mostra <b>dúvida</b>, e não discordância.</p>
+    </div>${simples('Se uma frase tem <b>60% favorável</b>, quer dizer que <b>6 em cada 10</b> pessoas concordaram com ela.<br><br>Ninguém é identificado: só mostramos o resultado do grupo, e uma frase só aparece com pelo menos '+d.minRespostas+' respostas.')}</div>`});
+
+  // 3. Participação
+  S.push({html:`<div class="eyebrow">Participação</div><h2>${d.respostas} de ${d.time} pessoas responderam</h2>
+    <div class="corpo"><div class="col">
+      <div style="display:flex;gap:40px;align-items:center;margin-bottom:10px">
+        <div class="grande">${pct(d.adesao)}</div>
+        <div class="leve">${periodo?'Período: <b>'+periodo+'</b><br>':''}Referência Voice 2026: <b>94%</b> (29 de 31)${fechada?'':'<br><span style="color:#b7791f;font-weight:700">Pesquisa ainda aberta</span>'}</div>
+      </div>
+      ${evolucaoDeck(d)}
+    </div>${simples(d.adesao>=.8?'A participação foi <b>alta</b>. O resultado mostra de verdade o que o time pensa.':d.adesao>=.6?'A participação foi <b>boa</b>. O resultado já é um retrato confiável da maioria do time.':'A participação ainda é <b>baixa</b>. Olhe os números como um sinal, não como o retrato completo do time.')}</div>`});
+
+  // 4. Visão por bloco
+  const bl={};vis.forEach(i=>(bl[i.bloco]=bl[i.bloco]||[]).push(i));
+  const blocos=Object.keys(bl).map(k=>({k,fav:bl[k].reduce((a,i)=>a+i.fav,0)/bl[k].length,par:bl[k].reduce((a,i)=>a+i.par,0)/bl[k].length})).sort((a,b)=>b.fav-a.fav);
+  if(blocos.length) S.push({html:`<div class="eyebrow">Visão geral</div><h2>Os temas, do mais forte ao que pede mais atenção</h2>
+    <div class="corpo"><div class="col">${barrasBlocos(blocos)}</div>
+    ${simples(`Cada barra é um <b>tema</b> da pesquisa. Passando da linha de <b>50%</b>, a maioria do time concorda.<br><br>O tema mais forte é <b>${esc(blocos[0].k)}</b>, e o que pede mais cuidado é <b>${esc(blocos[blocos.length-1].k)}</b>.`)}</div>`});
+
+  // 5. Pontos fortes / 6. Pontos de atenção
+  const ord=vis.slice().sort((a,b)=>b.fav-a.fav);
+  const cartao=(i,cor)=>`<div class="ci"><div class="p" style="color:${cor}">${pct(i.fav)}</div><div><div class="tx">${esc(i.texto)}</div>
+    <div class="ds">${qtd(i.fav,i.n)} de ${i.n} concordam · ${esc(i.bloco)}${voicePct(i.voice)!==null?' · Voice: '+pct(voicePct(i.voice)):''}</div></div></div>`;
+  if(ord.length>=3){
+    S.push({html:`<div class="eyebrow">Pontos fortes</div><h2>O que está funcionando e precisa continuar</h2>
+      <div class="corpo"><div class="col cards3">${ord.slice(0,3).map(i=>cartao(i,COR.fav)).join('')}</div>
+      ${simples('São as frases com <b>mais concordância</b>. É o que o time reconhece como bom hoje.<br><br>Vale <b>agradecer</b> e <b>manter</b>.')}</div>`});
+    const piores=ord.slice(-3).reverse();
+    S.push({html:`<div class="eyebrow">Pontos de atenção</div><h2>Onde o time pede mais atenção</h2>
+      <div class="corpo"><div class="col cards3">${piores.map(i=>cartao(i,COR.des)).join('')}</div>
+      ${simples('São as frases com <b>menos concordância</b>. É o recado mais forte do time.<br><br>Ouvir <b>sem se defender</b> e <b>sem procurar culpados</b>. Não perguntar quem respondeu o quê.')}</div>`});
+  }
+
+  // 7. Comparação com o Voice
+  const comV=vis.filter(i=>voicePct(i.voice)!==null);
+  if(comV.length){
+    const mel=comV.filter(i=>i.fav>voicePct(i.voice)).length;
+    S.push({html:`<div class="eyebrow">Antes e agora</div><h2>Comparação com o Voice 2026</h2>
+      <div class="corpo"><div class="col">${halteres(comV)}</div>
+      ${simples(`<span style="color:${COR.voice};font-weight:800">●</span> cinza = Voice 2026<br><span style="color:${COR.fav};font-weight:800">●</span> azul = agora<br><br>Linha indo para a <b>direita</b> = melhorou. <b>${mel} de ${comV.length}</b> temas melhoraram.<br><br><span style="font-size:14px;color:#55657a">Comparação indicativa: as perguntas são parecidas, não idênticas.</span>`)}</div>`});
+  }
+
+  // 8+. Todas as afirmações (8 por slide)
+  const todas=d.itens.slice(), porPag=Math.ceil(todas.length/Math.ceil(todas.length/8)); // páginas equilibradas, até 8 por slide
+  for(let p=0;p<todas.length;p+=porPag){
+    const fatia=todas.slice(p,p+porPag), tot=Math.ceil(todas.length/porPag);
+    const cv=ui.voice, lc=cv?'li cv':'li';
+    const colV=i=>{if(!cv)return '';const vp=voicePct(i.voice);if(vp===null||i.oculto)return '<div class="vv">—</div><div class="vd">—</div>';
+      const dl=Math.round(100*(i.fav-vp));return `<div class="vv">${pct(vp)}</div><div class="vd" style="color:${dl>=0?'#1e8e5a':COR.des}">${dl>0?'+':''}${dl}</div>`};
+    S.push({html:`<div class="eyebrow">Detalhe${tot>1?` · ${p/porPag+1} de ${tot}`:''}</div><h2 style="margin-bottom:14px">Todas as afirmações</h2>
+      <div class="legs"><span><i style="background:${COR.des}"></i>Desfavorável</span><span><i style="background:${COR.par}"></i>Parcial</span><span><i style="background:${COR.fav}"></i>Favorável</span></div>
+      <div class="${lc} lh"><div></div><div></div><div class="v">Avaliação</div>${cv?'<div class="vv">Voice</div><div class="vd">Evol.</div>':''}</div>
+      <div>${fatia.map(i=>i.oculto?`<div class="${lc}"><div><div class="bl">${esc(i.bloco)}</div><div class="tx">${esc(i.texto)}</div></div><div style="font-size:14px;color:#7a889b;font-style:italic">aguardando ${d.minRespostas} respostas</div><div></div>${colV(i)}</div>`
+        :`<div class="${lc}"><div><div class="bl">${esc(i.bloco)}</div><div class="tx">${esc(i.texto)}</div></div>
+        <div class="br">${[['des',i.des],['par',i.par],['fav',i.fav]].filter(s=>s[1]>0).map(([k,v])=>`<span style="flex:${v};background:${COR[k]}">${v>=.12?pct(v):''}</span>`).join('')}</div>
+        <div class="v">${pct(i.fav)}</div>${colV(i)}</div>`).join('')}</div>`});
+  }
+
+  // Comentários
+  if(fechada&&d.comentarios.length){
+    const g={};d.comentarios.forEach(c=>(g[c.pergunta]=g[c.pergunta]||[]).push(c.texto));
+    const blocosC=[];Object.keys(g).forEach(k=>g[k].forEach((t,ix)=>blocosC.push({k,t,primeiro:ix===0})));
+    let pag=[],peso=0;const pags=[];
+    blocosC.forEach(b=>{const w=1+Math.ceil(b.t.length/90);if(peso+w>22&&pag.length){pags.push(pag);pag=[];peso=0}pag.push(b);peso+=w});
+    if(pag.length)pags.push(pag);
+    pags.forEach((pg,ix)=>S.push({html:`<div class="eyebrow">Com as palavras do time${pags.length>1?` · ${ix+1} de ${pags.length}`:''}</div><h2 style="margin-bottom:18px">O que o time escreveu</h2>
+      <div class="cmts">${pg.map((b,j)=>`${b.primeiro||j===0?`<div class="q">${esc(b.k)}</div>`:''}<blockquote>${esc(b.t.length>320?b.t.slice(0,317)+'…':b.t)}</blockquote>`).join('')}</div>`}));
+  } else if(!fechada){
+    S.push({html:`<div class="eyebrow">Com as palavras do time</div><h2>Comentários</h2>
+      <div class="corpo"><div class="col"><p class="leve">Os comentários escritos aparecem quando a pesquisa for <b>encerrada</b>.</p></div>
+      ${simples('Isso protege o anonimato: ninguém é identificado pela ordem em que respondeu.')}</div>`});
+  }
+
+  // Plano de ação
+  const pl=d.plano;
+  if(pl&&pl.focos&&pl.focos.length){
+    S.push({html:`<div class="eyebrow">Plano de ação${pl.base==='parcial'?' · rascunho':''}</div><h2 style="margin-bottom:18px">O que vamos fazer</h2>
+      <div class="plcols" style="grid-template-columns:repeat(${pl.focos.length},1fr)">${pl.focos.map((f,k)=>`<div class="plc">
+        <div class="n">${k+1}</div><div class="t">${esc(f.texto)}</div>
+        <div class="mt">de ${pct(f.atual)} para <b>${pct(f.meta)}</b></div>
+        <ul>${f.acoes.slice(0,4).map(a=>`<li>${esc(a.txt)}<small>${esc(a.resp)} · até ${dBR(a.prazo)}</small></li>`).join('')}</ul>
+        ${f.acoes.length>4?`<div style="font-size:13px;color:#7a889b;margin-top:8px">+ ${f.acoes.length-4} ação(ões) na planilha</div>`:''}</div>`).join('')}</div>`});
+  }
+
+  // Fechamento
+  S.push({cls:'escura',html:`<div class="faixa"></div><div class="eyebrow">Próximos passos</div><h2>${pl&&pl.focos&&pl.focos.length?'Nossos compromissos':'O que ouvimos e o que vamos fazer'}</h2>
+    ${pl&&pl.focos&&pl.focos.length?`<div style="flex:1;display:grid;gap:14px;align-content:start">${pl.focos.map((f,k)=>`<div style="display:flex;gap:16px;align-items:center;font-size:22px">
+        <span style="flex:none;width:40px;height:40px;border-radius:50%;background:#1d8fe0;display:grid;place-items:center;font-weight:800">${k+1}</span>
+        <span>${esc(f.acoes[0]?f.acoes[0].txt:f.texto)}</span></div>`).join('')}
+      <p class="leve" style="font-size:18px;margin:6px 0 0">Vamos medir de novo na próxima rodada do Conexão Usinagem e mostrar a evolução para o time.</p></div>`
+    :`<div class="preencher">
+      <div class="bx"><b>3 coisas que ouvimos</b>${'<div class="ln"></div>'.repeat(3)}</div>
+      <div class="bx"><b>1 compromisso para os próximos 60 dias</b>${'<div class="ln"></div>'.repeat(2)}<p class="leve" style="font-size:16px;margin:14px 0 0">Vamos medir de novo na próxima rodada do Conexão Usinagem.</p></div>
+    </div>`}
+    <div style="margin-top:26px"><div class="ouro" style="font-size:30px">${esc(FRASE_DECK[0])}</div><div class="leve" style="font-size:17px">${esc(FRASE_DECK[1])}</div></div>`});
+
+  const tot=S.length;
+  return S.map((s,ix)=>`<div class="sw" data-ix="${ix}"><section class="slide ${s.cls||''}">${s.html}
+    <div class="rod"><span>Conexão Usinagem · ${esc(d.campanha||'')}${fechada?'':` · <span class="parc">PARCIAL (base ${d.base})</span>`}</span><span>${ix+1} / ${tot}</span></div></section></div>`).join('');
+}
+
+function evolucaoDeck(d){
+  if(!d.porDia.length) return '';
+  const W=760,H=300,L=52,R=20,T=16,B=34,iw=W-L-R,ih=H-T-B;
+  let acc=0;const pts=d.porDia.map(p=>{acc+=p.n;return {...p,ad:acc/d.time}});
+  const n=pts.length,x=i=>L+(n===1?iw/2:i*iw/(n-1)),y=v=>T+ih*(1-Math.min(1,v));
+  const linha=pts.map((p,i)=>`${i?'L':'M'}${x(i)},${y(p.ad)}`).join(' ');
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+    ${[0,.5,1].map(g=>`<line x1="${L}" x2="${W-R}" y1="${y(g)}" y2="${y(g)}" stroke="#e8edf3"/><text x="${L-8}" y="${y(g)+5}" text-anchor="end" font-size="14" fill="#7a889b">${g*100}%</text>`).join('')}
+    <line x1="${L}" x2="${W-R}" y1="${y(.94)}" y2="${y(.94)}" stroke="#7a889b" stroke-dasharray="5 5"/><text x="${W-R}" y="${y(.94)-7}" text-anchor="end" font-size="14" fill="#55657a">Voice 94%</text>
+    <path d="${linha} L${x(n-1)},${y(0)} L${x(0)},${y(0)} Z" fill="#0b5cab" opacity=".1"/>
+    <path d="${linha}" fill="none" stroke="#0b5cab" stroke-width="3"/>
+    ${pts.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.ad)}" r="6" fill="#0b5cab" stroke="#fff" stroke-width="2"/>`).join('')}
+    <text x="${x(n-1)}" y="${y(pts[n-1].ad)-14}" text-anchor="end" font-size="16" font-weight="800" fill="#0b5cab">${pct(pts[n-1].ad)}</text>
+    ${pts.map((p,i)=>i%Math.ceil(n/7)===0||i===n-1?`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="13" fill="#7a889b">${p.data.slice(8,10)}/${p.data.slice(5,7)}</text>`:'').join('')}
+  </svg>`;
+}
+
+function barrasBlocos(bs){
+  const W=740,rowH=58,L=190,R=70,H=bs.length*rowH+30,iw=W-L-R,x=v=>L+iw*v;
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+    <line x1="${x(.5)}" x2="${x(.5)}" y1="0" y2="${H-24}" stroke="#7a889b" stroke-dasharray="5 5"/>
+    <text x="${x(.5)}" y="${H-6}" text-anchor="middle" font-size="13" fill="#55657a">50%</text>
+    ${bs.map((b,i)=>{const y=i*rowH+8;return `
+      <text x="${L-14}" y="${y+27}" text-anchor="end" font-size="19" font-weight="700" fill="#14233a">${esc(b.k)}</text>
+      <rect x="${L}" y="${y+8}" width="${iw}" height="28" rx="6" fill="#eef1f5"/>
+      <rect x="${L}" y="${y+8}" width="${Math.max(6,iw*b.fav)}" height="28" rx="6" fill="${b.fav<.5?COR.des:COR.fav}"/>
+      <text x="${x(b.fav)+10}" y="${y+29}" font-size="18" font-weight="800" fill="#14233a">${pct(b.fav)}</text>`}).join('')}
+  </svg>`;
+}
+
+function halteres(items){
+  const W=770,rowH=Math.max(40,Math.min(62,Math.floor(470/items.length))),L=372,R=44,H=items.length*rowH+34,iw=W-L-R,x=v=>L+iw*v;
+  // quebra o texto em até 2 linhas de ~44 caracteres
+  const linhas=t=>{const p=t.split(' ');const ls=[''];p.forEach(w=>{const l=ls[ls.length-1];if((l+' '+w).trim().length>44&&ls.length<2)ls.push(w);else ls[ls.length-1]=(l+' '+w).trim()});
+    if(ls.join(' ').length<t.length){ls[ls.length-1]=ls[ls.length-1].slice(0,41)+'…'}return ls};
+  const curto=t=>linhas(t).map((l,k,a)=>`<tspan x="${L-18}" dy="${k?16:(a.length>1?-3:5)}">${esc(l)}</tspan>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+    ${[0,.25,.5,.75,1].map(g=>`<line x1="${x(g)}" x2="${x(g)}" y1="0" y2="${H-26}" stroke="#eef1f5"/><text x="${x(g)}" y="${H-8}" text-anchor="middle" font-size="13" fill="#7a889b">${g*100}%</text>`).join('')}
+    ${items.map((i,k)=>{const y=k*rowH+rowH/2,v=voicePct(i.voice),a=i.fav,dl=Math.round(100*(a-v));return `
+      <text x="${L-18}" y="${y-(linhas(i.texto).length>1?5:0)}" text-anchor="end" font-size="14" font-weight="600" fill="#14233a">${curto(i.texto)}</text>
+      <line x1="${x(v)}" x2="${x(a)}" y1="${y}" y2="${y}" stroke="${dl>=0?COR.fav:COR.des}" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+      <circle cx="${x(v)}" cy="${y}" r="8" fill="${COR.voice}" stroke="#fff" stroke-width="2"/>
+      <circle cx="${x(a)}" cy="${y}" r="9" fill="${COR.fav}" stroke="#fff" stroke-width="2"/>
+      <text x="${Math.max(x(a),x(v))+16}" y="${y+5}" font-size="15" font-weight="800" fill="${dl>=0?'#1e8e5a':COR.des}">${dl>0?'+':''}${dl}</text>`}).join('')}
+  </svg>`;
+}
+
+let deckIx=0;
+function abrirDeck(){
+  const d=ui.dados;if(!d)return;
+  clearInterval(ui.timer);
+  const deck=document.getElementById('deck');
+  deck.innerHTML=`<div class="deckbar no-print">
+      <button class="btn" id="dVolta">‹ Painel</button>
+      <span class="t">Apresentação · ${d.status==='encerrada'?'resultado final':'resultado parcial'}</span>
+      <button class="btn" id="dApres">▶ Apresentar</button>
+      <button class="btn pri" id="dPdf">${icoPrint}<span>Salvar PDF</span></button>
+      <span class="dica">"Salvar PDF": na janela que abrir, escolha <b>Salvar como PDF</b> e ative <b>Gráficos de plano de fundo</b>. No celular, use <b>Compartilhar &gt; Imprimir &gt; Salvar PDF</b>.</span>
+    </div><div class="slides">${slidesHTML(d)}</div>`;
+  document.body.classList.add('modo-deck');window.scrollTo(0,0);
+  escalar();
+  document.getElementById('dVolta').onclick=fecharDeck;
+  document.getElementById('dPdf').onclick=()=>print();
+  document.getElementById('dApres').onclick=()=>apresentar(0);
+  deck.querySelectorAll('.sw').forEach(s=>s.onclick=()=>apresentar(+s.dataset.ix));
+}
+function fecharDeck(){document.body.classList.remove('modo-deck');document.getElementById('deck').innerHTML='';sairPalco();render();const c=lerChave();if(ui.dados&&ui.dados.status!=='encerrada')ui.timer=setInterval(()=>carregar(c),60000)}
+function escalar(){
+  document.querySelectorAll('#deck .sw').forEach(w=>{const s=w.querySelector('.slide');s.style.transform=`scale(${w.clientWidth/1280})`});
+  const p=document.getElementById('palco');
+  if(p.classList.contains('on')){const s=p.querySelector('.slide');if(s){const k=Math.min(innerWidth/1280,innerHeight/720);s.style.transform=`scale(${k})`;s.style.left=(innerWidth-1280*k)/2+'px';s.style.top=(innerHeight-720*k)/2+'px'}}
+}
+addEventListener('resize',escalar);
+CEL.addEventListener("change",()=>{if(ui.dados&&document.getElementById("secItens"))render()});
+function apresentar(ix){
+  const todos=[...document.querySelectorAll('#deck .slide')];if(!todos.length)return;
+  deckIx=Math.max(0,Math.min(todos.length-1,ix));
+  const p=document.getElementById('palco');
+  p.innerHTML=todos[deckIx].outerHTML+`<div class="ctrl"><button id="pA" aria-label="Anterior">‹</button><span>${deckIx+1} / ${todos.length}</span><button id="pP" aria-label="Próximo">›</button><button id="pX" aria-label="Sair">✕</button></div>`;
+  p.querySelector('.slide').style.transform='';
+  p.classList.add('on');escalar();
+  document.getElementById('pA').onclick=e=>{e.stopPropagation();apresentar(deckIx-1)};
+  document.getElementById('pP').onclick=e=>{e.stopPropagation();apresentar(deckIx+1)};
+  document.getElementById('pX').onclick=e=>{e.stopPropagation();sairPalco()};
+  if(!document.fullscreenElement&&p.requestFullscreen)p.requestFullscreen().catch(()=>{});
+}
+function sairPalco(){const p=document.getElementById('palco');p.classList.remove('on');p.innerHTML='';if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('palco').classList.contains('on'))return;
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();apresentar(deckIx+1)}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();apresentar(deckIx-1)}
+  else if(e.key==='Escape')sairPalco();
+});
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)sairPalco()});
+(()=>{let x0=null;const p=document.getElementById('palco');
+  p.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+  p.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)apresentar(deckIx+(dx<0?1:-1));x0=null});
+  p.addEventListener('click',e=>{if(e.target.closest('.ctrl'))return;apresentar(deckIx+(e.clientX>innerWidth/3?1:-1))});
+})();
+addEventListener('beforeprint',()=>document.querySelectorAll('#deck .sw .slide').forEach(s=>s.style.transform='none'));
+addEventListener('afterprint',escalar);
+
+/* ---------------- dados de exemplo (sem ENDPOINT) ---------------- */
+function demo(){
+  const P=[['Voz','Posso discordar do meu líder sem medo de consequências.','· 31%'],['Voz','Quando dou uma ideia, recebo um retorno, mesmo que a resposta seja "não".','· 38%'],
+   ['Voz','Me sinto à vontade para sugerir melhorias no meu posto de trabalho.','· 48%'],['Reconhecimento','Meu líder percebe quando faço um bom trabalho.','· 48%'],
+   ['Reconhecimento','Recebo feedback do meu líder com frequência suficiente.',''],['Reconhecimento','Entendi o resultado da minha última avaliação de desempenho e o que fazer para melhorar.',''],
+   ['Desenvolvimento','Sei o que preciso aprender para crescer aqui.','· 31%'],['Desenvolvimento','Tenho oportunidades reais de aprender coisas novas (treinamento, outro posto, outra máquina).','· 31%'],
+   ['Colegas','Me sinto respeitado pelos meus colegas.','· 52%'],['Colegas','No meu turno, trabalhamos como um time para atingir as metas.','· 52%'],
+   ['Colegas','Quando surge um desentendimento no time, ele é resolvido de forma justa e respeitosa.',''],['Líder','Meu líder está presente e acessível quando preciso.','· 59%'],
+   ['Líder','Meu líder trata todos de forma justa, sem favorecer ninguém.',''],['Líder','Meu líder age com firmeza quando alguém tem um comportamento inadequado.',''],['Motivação','Me sinto motivado a dar o meu melhor todos os dias.','· 55%']];
+  const fav=[.45,.5,.6,.55,.4,.35,.4,.35,.6,.65,.55,.75,.6,.5,.6],par=[.35,.3,.25,.3,.35,.3,.35,.4,.25,.2,.3,.15,.25,.3,.25];
+  const n=20;
+  return Promise.resolve({ok:true,status:'aberta',campanha:'conexao-2027-1',time:31,respostas:22,adesao:22/31,base:n,proximaAtualizacao:3,minRespostas:5,blocoParcial:5,
+    porDia:[['2027-02-09',6],['2027-02-10',5],['2027-02-11',3],['2027-02-12',4],['2027-02-13',1],['2027-02-16',3]].map(([data,n])=>({data,n})),
+    itens:P.map(([bloco,texto,v],k)=>({id:'q'+(k+1),bloco,texto,voice:v?'Voice'+v:'',n,oculto:false,fav:fav[k],par:par[k],des:1-fav[k]-par[k],media:4.4})),
+    plano:(()=>{try{return JSON.parse(localStorage.getItem('conexao_plano_demo')||'null')}catch(e){return null}})(),
+    comentarios:[],geradoEm:new Date().toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})});
+}
+
+const c0=lerChave();
+if(ENDPOINT&&!c0) telaLogin(); else carregar(c0||'DEMO');
+</script>
+</body>
+</html>

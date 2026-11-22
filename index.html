@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Conexão Usinagem</title>
+<meta name="description" content="Pesquisa anônima do time de Usinagem sobre liderança, voz e desenvolvimento.">
+<meta name="theme-color" content="#0b5cab" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1622" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Conexão">
+<style>
+:root{
+  --bg:#f2f5f9; --card:#ffffff; --ink:#132033; --muted:#5b6b80; --line:#dde4ee;
+  --brand:#0b5cab; --brand-ink:#ffffff; --brand-soft:#e6f0fb; --gold:#9a6a12;
+  --s6:#1e8e5a; --s5:#55a86f; --s4:#c9a227; --s3:#e08a3c; --s2:#d4603f; --s1:#b8403a;
+  --shadow:0 6px 24px rgba(19,32,51,.08); --radius:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1622; --card:#172231; --ink:#e7edf5; --muted:#9aabbf; --line:#273547;
+    --brand:#4d9be6; --brand-ink:#08121e; --brand-soft:#1b2d44; --gold:#f3c66b;
+    --s6:#3fbf7f; --s5:#79c48f; --s4:#e0bd4c; --s3:#ee9f5a; --s2:#e67a5c; --s1:#e0625b;
+    --shadow:0 6px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1622; --card:#172231; --ink:#e7edf5; --muted:#9aabbf; --line:#273547;
+  --brand:#4d9be6; --brand-ink:#08121e; --brand-soft:#1b2d44; --gold:#f3c66b;
+  --s6:#3fbf7f; --s5:#79c48f; --s4:#e0bd4c; --s3:#ee9f5a; --s2:#e67a5c; --s1:#e0625b;
+  --shadow:0 6px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button,textarea{font:inherit;color:inherit}
+button{touch-action:manipulation;cursor:pointer}
+.app{min-height:100%;display:flex;flex-direction:column;max-width:640px;margin:0 auto;
+  padding:calc(12px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom))}
+header.top{display:flex;align-items:center;gap:12px;min-height:44px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--brand);display:grid;place-items:center;flex:none}
+.logo svg{width:22px;height:22px}
+.top .t{font-weight:700;font-size:16px;line-height:1.2}
+.top .s{font-size:13px;color:var(--muted)}
+.prog{margin:14px 0 4px;display:flex;gap:4px}
+.prog i{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden;position:relative}
+.prog i b{position:absolute;inset:0;width:0;background:var(--brand);transition:width .35s ease}
+.progtxt{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:14px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px}
+.screen{animation:in .32s ease both}
+.screen.back{animation-name:inback}
+@keyframes in{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes inback{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.screen{animation:none}.prog i b{transition:none}}
+h1{font-size:26px;line-height:1.2;margin:0 0 8px}
+h2{font-size:21px;line-height:1.3;margin:0 0 6px}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--brand);
+  background:var(--brand-soft);padding:4px 10px;border-radius:999px;margin-bottom:12px}
+.promessas{display:grid;gap:10px;margin:18px 0}
+.prom{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:14px}
+.prom .ic{flex:none;width:34px;height:34px;border-radius:10px;background:var(--brand-soft);display:grid;place-items:center;color:var(--brand)}
+.prom .ic svg{width:20px;height:20px}
+.prom b{display:block;font-size:15px}
+.prom span{font-size:14px;color:var(--muted)}
+.escala-demo{display:flex;gap:4px;margin:8px 0 4px}
+.escala-demo i{flex:1;height:10px;border-radius:5px}
+.escala-leg{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 22px;border-radius:14px;
+  border:0;background:var(--brand);color:var(--brand-ink);font-weight:700;font-size:17px;width:100%}
+.btn:active{transform:scale(.98)}
+.btn.sec{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.45}
+.btn:focus-visible,.op:focus-visible,.link:focus-visible,textarea:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+[tabindex="-1"]:focus{outline:none}
+.nav{display:flex;gap:10px;margin-top:16px}
+.nav .btn{flex:1}
+.nav .btn.sec{flex:0 0 auto;width:auto}
+.frase{font-size:21px;line-height:1.35;font-weight:650;margin:2px 0 14px}
+.porque{margin:0 0 16px}
+.porque summary{list-style:none;cursor:pointer;font-size:14px;color:var(--brand);font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.porque summary::-webkit-details-marker{display:none}
+.porque p{font-size:14px;color:var(--muted);margin:8px 0 0;padding:10px 12px;background:var(--brand-soft);border-radius:12px}
+.inv{font-size:13px;color:var(--muted);margin:-6px 0 12px;display:flex;gap:6px;align-items:flex-start}
+.ops{display:grid;gap:8px}
+.op{display:flex;align-items:center;gap:12px;min-height:52px;padding:10px 14px;border-radius:14px;border:1.5px solid var(--line);
+  background:var(--card);text-align:left;font-size:16px;font-weight:550;transition:border-color .15s,background .15s}
+.op .dot{flex:none;width:16px;height:16px;border-radius:50%;border:3px solid var(--c);background:transparent;transition:background .15s}
+.op .n{margin-left:auto;font-size:12px;color:var(--muted);font-weight:500}
+.op[aria-checked="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--card))}
+.op[aria-checked="true"] .dot{background:var(--c)}
+@media (hover:hover){.op:hover{border-color:var(--c)}}
+.campo{margin-bottom:16px}
+.campo label{display:block;font-weight:650;margin-bottom:6px}
+textarea{width:100%;min-height:96px;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);font-size:16px;resize:vertical}
+.cont{font-size:12px;color:var(--muted);text-align:right;margin-top:2px}
+.aviso{font-size:14px;color:var(--muted);display:flex;gap:8px;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;margin-bottom:14px}
+.rev{display:grid;gap:6px;margin:8px 0 4px;max-height:46vh;overflow:auto;padding-right:2px}
+.revl{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);font-size:14px}
+.revl .q{flex:1 1 100%;min-width:0}
+.revl .a{flex:none;font-weight:650;font-size:13px;padding:2px 10px;border-radius:999px;color:#fff;background:var(--c)}
+.revl .link{margin-left:auto}
+.link{background:none;border:0;color:var(--brand);font-weight:600;font-size:13px;padding:6px}
+.fim{text-align:center}
+.fim .ok{width:72px;height:72px;border-radius:50%;background:var(--s6);display:grid;place-items:center;margin:0 auto 14px}
+.fim .ok svg{width:40px;height:40px}
+.passos{text-align:left;margin:18px 0 6px;display:grid;gap:10px}
+.passo{display:flex;gap:12px}
+.passo .num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:700;display:grid;place-items:center;font-size:14px}
+.spinner{width:42px;height:42px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--brand);animation:spin 1s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);
+  padding:10px 16px;border-radius:12px;font-size:14px;box-shadow:var(--shadow);max-width:calc(100% - 32px);z-index:10}
+.install{margin-top:12px}
+.verres{display:flex;align-items:center;gap:12px;margin:0 0 16px;padding:12px 14px;border-radius:14px;background:var(--brand-soft,#e6f0fb);color:inherit;text-decoration:none;border:1px solid var(--line)}.verres b{display:block}.verres span{font-size:13px;opacity:.8}.verres .ar{margin-left:auto;font-size:22px}
+.demo{font-size:12px;color:var(--s3);text-align:center;margin-top:8px}
+.assin{margin:24px 0 0;padding-top:18px;border-top:1px solid var(--line);text-align:left}
+.assin .t1{display:block;font-family:Lora,Georgia,"Times New Roman",serif;font-style:italic;font-size:21px;line-height:1.3;color:var(--gold)}
+.assin .t2{display:block;font-size:14px;color:var(--muted);margin-top:4px}
+.kbd{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+@media (hover:none){.kbd{display:none}}
+@media (min-width:700px){h1{font-size:30px}.frase{font-size:23px}.card{padding:30px 32px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg>
+    </div>
+    <div><div class="t">Conexão Usinagem</div><div class="s">Pesquisa anônima do time</div></div>
+  </header>
+  <div id="progwrap" hidden>
+    <div class="prog" id="prog"></div>
+    <div class="progtxt"><span id="progbloco"></span><span id="prognum"></span></div>
+  </div>
+  <main id="main" aria-live="polite"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ================== CONFIGURAÇÃO ==================
+   Cole aqui a URL do Web App do Apps Script (termina em /exec).
+   Sem URL, a página roda em MODO DEMONSTRAÇÃO e não grava nada. */
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwY6wtu2rxdj4lpGC_88gmSg4Eu8-YSO2E43Hl5piZ39I6rRC6e_f_mWarqAVvXV_fRyQ/exec';
+const CAMPANHA = 'conexao-2027-1';
+// Frase do rodapé da tela final: [destaque, complemento]. Use ['',''] para não mostrar.
+const FRASE = ['O Reino de Deus na dinâmica da vida.', 'Onde suficiências e necessidades se complementam!'];
+/* ================================================== */
+
+const ESCALA = [
+  {v:6, t:'Concordo totalmente',   c:'var(--s6)'},
+  {v:5, t:'Concordo',              c:'var(--s5)'},
+  {v:4, t:'Concordo parcialmente', c:'var(--s4)'},
+  {v:3, t:'Discordo parcialmente', c:'var(--s3)'},
+  {v:2, t:'Discordo',              c:'var(--s2)'},
+  {v:1, t:'Discordo totalmente',   c:'var(--s1)'}
+];
+
+const PERGUNTAS = [
+ {id:'q1', bloco:'Voz', texto:'Posso discordar do meu líder sem medo de consequências.',
+  porque:'Times que falam abertamente resolvem problemas mais cedo. Aqui queremos saber se você se sente seguro para dizer "não concordo".', voice:'Liberdade de opinar sem medo · 31%'},
+ {id:'q2', bloco:'Voz', texto:'Quando dou uma ideia, recebo um retorno, mesmo que a resposta seja "não".',
+  porque:'Uma ideia sem resposta desanima. Queremos saber se as sugestões estão voltando para quem deu.', voice:'Minhas opiniões e ideias contam · 38%'},
+ {id:'q3', bloco:'Voz', texto:'Me sinto à vontade para sugerir melhorias no meu posto de trabalho.',
+  porque:'Quem está na máquina enxerga melhorias que ninguém mais vê.', voice:'Posso sugerir melhorias · 48%'},
+ {id:'q4', bloco:'Reconhecimento', texto:'Meu líder percebe quando faço um bom trabalho.',
+  porque:'Reconhecimento não é só elogio público: é perceber o esforço do dia a dia.', voice:'Gestor reconhece meus esforços · 48%'},
+ {id:'q5', bloco:'Reconhecimento', texto:'Recebo feedback do meu líder com frequência suficiente.',
+  porque:'Feedback é saber, com tempo de ajustar, como você está indo, e não só uma vez por ano.', voice:''},
+ {id:'q6', bloco:'Reconhecimento', texto:'Entendi o resultado da minha última avaliação de desempenho e o que fazer para melhorar.',
+  porque:'Uma nota sem explicação gera dúvida. Queremos saber se a conversa da avaliação foi clara.', voice:''},
+ {id:'q7', bloco:'Desenvolvimento', texto:'Sei o que preciso aprender para crescer aqui.',
+  porque:'Crescer começa por saber qual é o próximo passo.', voice:'Oportunidades de desenvolvimento · 31%'},
+ {id:'q8', bloco:'Desenvolvimento', texto:'Tenho oportunidades reais de aprender coisas novas (treinamento, outro posto, outra máquina).',
+  porque:'Saber o que aprender não basta: precisa ter a chance de praticar.', voice:'Oportunidades de desenvolvimento · 31%'},
+ {id:'q9', bloco:'Colegas', texto:'Me sinto respeitado pelos meus colegas.',
+  porque:'O clima entre colegas pesa tanto quanto a liderança no dia a dia.', voice:'Colegas respeitam meus pensamentos · 52%'},
+ {id:'q10', bloco:'Colegas', texto:'No meu turno, trabalhamos como um time para atingir as metas.',
+  porque:'Queremos saber se o turno joga junto ou cada um por si.', voice:'Trabalhamos juntos como time · 52%'},
+ {id:'q11', bloco:'Colegas', texto:'Quando surge um desentendimento no time, ele é resolvido de forma justa e respeitosa.',
+  porque:'Desentendimentos acontecem em qualquer time. O que importa é como eles são resolvidos.', voice:''},
+ {id:'q12', bloco:'Líder', texto:'Meu líder está presente e acessível quando preciso.',
+  porque:'Estar perto do time é a base de tudo.', voice:'Gestor visível e acessível · 59%'},
+ {id:'q13', bloco:'Líder', texto:'Meu líder trata todos de forma justa, sem favorecer ninguém.',
+  porque:'Sentir que as regras valem para todos é essencial para a confiança.', voice:''},
+ {id:'q14', bloco:'Líder', texto:'Meu líder age com firmeza quando alguém tem um comportamento inadequado.',
+  porque:'Ser humano e ser firme andam juntos. Queremos saber se os combinados estão sendo cobrados.', voice:''},
+ {id:'q15', bloco:'Motivação', texto:'Me sinto motivado a dar o meu melhor todos os dias.',
+  porque:'É a pergunta-resumo: se o resto estiver funcionando, esta tende a subir.', voice:'Esforce-se · 55%'}
+];
+
+const ABERTAS = [
+ {id:'a1', texto:'O que o seu líder deveria COMEÇAR a fazer?', dica:'Ex.: uma conversa, um hábito, uma prática.'},
+ {id:'a2', texto:'O que o seu líder deveria PARAR de fazer?', dica:'Seja direto: é anônimo.'},
+ {id:'a3', texto:'Se você pudesse mudar UMA coisa na Usinagem amanhã, o que seria?', dica:'Opcional. Pode ser algo pequeno, ou qualquer outra coisa que queira dizer.'}
+];
+
+const BLOCOS = [...new Set(PERGUNTAS.map(p=>p.bloco))];
+const FILA_KEY = 'conexao_fila_envio';
+const st = {tela:'inicio', i:0, resp:{}, abertas:{}, dir:1};
+
+const $ = s => document.querySelector(s);
+const main = $('#main');
+const esc = s => String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ico = {
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  info:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>'
+};
+
+function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,3200)}
+
+function progresso(){
+  const w=$('#progwrap');
+  if(st.tela!=='q'&&st.tela!=='abertas'){w.hidden=true;return}
+  w.hidden=false;
+  const prog=$('#prog');
+  if(!prog.children.length) prog.innerHTML=BLOCOS.map(()=>'<i><b></b></i>').join('')+'<i><b></b></i>';
+  const bAtual = st.tela==='q' ? BLOCOS.indexOf(PERGUNTAS[st.i].bloco) : BLOCOS.length;
+  [...prog.children].forEach((el,bi)=>{
+    let pct=0;
+    if(bi<bAtual) pct=100;
+    else if(bi===bAtual && st.tela==='q'){
+      const doBloco=PERGUNTAS.filter(p=>p.bloco===BLOCOS[bi]);
+      const pos=doBloco.indexOf(PERGUNTAS[st.i]);
+      pct=Math.round(100*pos/doBloco.length);
+    } else if(bi===bAtual) pct=50;
+    el.firstChild.style.width=pct+'%';
+  });
+  $('#progbloco').textContent = st.tela==='q' ? PERGUNTAS[st.i].bloco : 'Comentários';
+  $('#prognum').textContent = st.tela==='q' ? `${st.i+1} de ${PERGUNTAS.length}` : 'quase lá';
+}
+
+function render(){
+  progresso();
+  const cls='screen'+(st.dir<0?' back':'');
+  if(st.tela==='inicio') main.innerHTML=telaInicio(cls);
+  else if(st.tela==='q') main.innerHTML=telaPergunta(cls);
+  else if(st.tela==='abertas') main.innerHTML=telaAbertas(cls);
+  else if(st.tela==='revisao') main.innerHTML=telaRevisao(cls);
+  else if(st.tela==='enviando') main.innerHTML=`<div class="card ${cls}" style="text-align:center"><div class="spinner"></div><h2>Enviando…</h2><p class="muted">Só um instante.</p></div>`;
+  else if(st.tela==='fim') main.innerHTML=telaFim(cls);
+  ligar();
+  const foco=main.querySelector('[data-foco]')||main.querySelector('h1,h2,.frase');
+  if(foco){foco.setAttribute('tabindex','-1');foco.focus({preventScroll:true})}
+  window.scrollTo({top:0});
+}
+
+function telaInicio(cls){
+  if(st.fechada) return telaFechada(cls);
+  return `<div class="card ${cls}">
+    ${st.publicado?`<a class="verres" href="resultado.html"><span style="font-size:24px">📊</span><div><b>Ver o resultado do time</b><span>A última pesquisa já tem resultado e plano de ação</span></div><span class="ar">›</span></a>`:""}
+    <span class="chip">${ico.clock.replace('<svg','<svg width="14" height="14"')} cerca de 5 minutos</span>
+    <h1>Sua opinião muda o dia a dia do time</h1>
+    <p class="muted">No Voice, alguns pontos ficaram abaixo do que queremos. Antes de decidir o que mudar, quero entender melhor, do seu ponto de vista. Suas respostas vão montar o nosso plano de ação.</p>
+    <div class="promessas">
+      <div class="prom"><div class="ic">${ico.lock}</div><div><b>100% anônima</b><span>Não pedimos nome, e-mail, turno nem setor. Nada identifica você.</span></div></div>
+      <div class="prom"><div class="ic">${ico.users}</div><div><b>Só o resultado do grupo</b><span>Uma pergunta só aparece no resultado com pelo menos 5 respostas.</span></div></div>
+    </div>
+    <h2 style="font-size:17px">Como responder</h2>
+    <p class="muted" style="font-size:15px">Você vai ler 15 frases e dizer o quanto concorda com cada uma. Pense no seu <b>dia a dia aqui</b>. Não existe resposta certa: a resposta sincera é a que ajuda.</p>
+    <div class="escala-demo" aria-hidden="true">${ESCALA.slice().reverse().map(e=>`<i style="background:${e.c}"></i>`).join('')}</div>
+    <div class="escala-leg"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+    <div class="nav" style="margin-top:22px"><button class="btn" id="comecar" data-foco>Começar</button></div>
+    <div id="instalar"></div>
+    ${!ENDPOINT?'<div class="demo">Modo demonstração: as respostas não são gravadas.</div>':''}
+  </div>`;
+}
+
+// Pesquisa encerrada: não deixa começar (evita responder tudo e ser recusado no final).
+function telaFechada(cls){
+  return `<div class="card ${cls}">
+    <span class="chip">Rodada encerrada</span>
+    <h1>Obrigado a quem participou!</h1>
+    <p class="muted">Esta rodada da pesquisa já foi encerrada e não recebe mais respostas.</p>
+    ${st.publicado?`<a class="verres" href="resultado.html"><span style="font-size:24px">📊</span><div><b>Ver o resultado do time</b><span>O que ouvimos e o plano de ação, com o andamento</span></div><span class="ar">›</span></a>`
+      :`<p class="muted">O resultado do time vai aparecer <b>aqui mesmo</b> assim que for consolidado. Volte em alguns dias.</p>`}
+    <p class="muted" style="font-size:15px">Quando abrir a próxima rodada, o botão para responder volta a aparecer nesta tela.</p>
+    ${FRASE[0]?`<p class="assin"><span class="t1">${esc(FRASE[0])}</span><span class="t2">${esc(FRASE[1]||"")}</span></p>`:""}
+  </div>`;
+}
+
+function telaPergunta(cls){
+  const p=PERGUNTAS[st.i]; const sel=st.resp[p.id];
+  return `<div class="card ${cls}">
+    <span class="chip">${esc(p.bloco)}</span>
+    <div class="frase" id="frase">${esc(p.texto)}</div>
+    ${p.inv?`<div class="inv">${ico.info}<span>Atenção: nesta frase, <b>concordar</b> quer dizer que isso <b>acontece</b> com você.</span></div>`:''}
+    <details class="porque"><summary>${ico.info} Por que perguntamos isso?</summary><p>${esc(p.porque)}</p></details>
+    <div class="ops" role="radiogroup" aria-labelledby="frase">
+      ${ESCALA.map((e,k)=>`<button class="op" role="radio" aria-checked="${sel===e.v}" data-v="${e.v}" style="--c:${e.c}" ${sel===e.v||(!sel&&k===0)?'tabindex="0"':'tabindex="-1"'}>
+        <span class="dot"></span><span>${e.t}</span></button>`).join('')}
+    </div>
+    <div class="nav">
+      <button class="btn sec" id="voltar" aria-label="Voltar">‹ Voltar</button>
+      <button class="btn" id="avancar" ${sel?'':'disabled'}>${st.i===PERGUNTAS.length-1?'Continuar':'Próxima'}</button>
+    </div>
+    <div class="kbd">Dica: no computador, use as teclas 1 a 6 e Enter.</div>
+  </div>`;
+}
+
+function telaAbertas(cls){
+  return `<div class="card ${cls}">
+    <span class="chip">Para terminar · opcional</span>
+    <h2>Com as suas palavras</h2>
+    <div class="aviso">${ico.info}<span>Fale de situações e comportamentos, <b>sem citar nomes</b> de colegas. Assim ninguém é identificado, nem você.</span></div>
+    ${ABERTAS.map(a=>`<div class="campo"><label for="${a.id}">${esc(a.texto)}</label>
+      <textarea id="${a.id}" maxlength="800" placeholder="${esc(a.dica)}">${esc(st.abertas[a.id]||'')}</textarea>
+      <div class="cont" id="c_${a.id}">${(st.abertas[a.id]||'').length}/800</div></div>`).join('')}
+    <div class="nav"><button class="btn sec" id="voltar">‹ Voltar</button><button class="btn" id="avancar">Revisar respostas</button></div>
+  </div>`;
+}
+
+function telaRevisao(cls){
+  return `<div class="card ${cls}">
+    <span class="chip">Revisão</span>
+    <h2 data-foco>Confira antes de enviar</h2>
+    <p class="muted" style="font-size:14px">Toque em "alterar" para mudar uma resposta. Depois de enviar, não dá para mudar.</p>
+    <div class="rev">
+      ${PERGUNTAS.map((p,i)=>{const e=ESCALA.find(x=>x.v===st.resp[p.id]);return `<div class="revl"><span class="q">${i+1}. ${esc(p.texto)}</span>
+        <span class="a" style="--c:${e.c}">${e.t}</span>
+        <button class="link" data-ir="${i}" aria-label="Alterar resposta ${i+1}">alterar</button></div>`}).join('')}
+    </div>
+    <div class="nav"><button class="btn sec" id="voltar">‹ Voltar</button><button class="btn" id="enviar">Enviar respostas</button></div>
+  </div>`;
+}
+
+function telaFim(cls){
+  const pend=lerFila().length;
+  return `<div class="card fim ${cls}">
+    <div class="ok">${ico.check}</div>
+    <h1 data-foco>Obrigado!</h1>
+    <p class="muted">${st.encerrada?'Esta rodada da pesquisa já foi encerrada, então sua resposta não entrou no resultado. Obrigado pela disposição. Fique de olho na próxima!':pend?'Você está sem internet agora. Sua resposta ficou guardada neste aparelho e será enviada sozinha quando a conexão voltar.':'Sua resposta foi registrada, de forma anônima.'}</p>
+    <div class="passos">
+      <div class="passo"><span class="num">1</span><span>As respostas de todos são juntadas por quem consolida a pesquisa.</span></div>
+      <div class="passo"><span class="num">2</span><span>Em até 2 semanas, o time vê o resultado do grupo.</span></div>
+      <div class="passo"><span class="num">3</span><span>Escolhemos juntos o que mudar a seguir.</span></div>
+    </div>
+    ${FRASE[0]?`<p class="assin"><span class="t1">${esc(FRASE[0])}</span>${FRASE[1]?`<span class="t2">${esc(FRASE[1])}</span>`:''}</p>`:''}
+    ${!ENDPOINT?'<div class="demo">Modo demonstração: nada foi gravado.</div>':''}
+  </div>`;
+}
+
+function ligar(){
+  const on=(id,fn)=>{const el=document.getElementById(id);if(el)el.onclick=fn};
+  on('comecar',()=>ir('q',0,1));
+  if(st.tela==='q'){
+    main.querySelectorAll('.op').forEach(b=>b.onclick=()=>escolher(+b.dataset.v));
+    main.querySelector('.ops').onkeydown=e=>{
+      if(!['ArrowDown','ArrowUp','ArrowLeft','ArrowRight'].includes(e.key))return;
+      e.preventDefault();const ops=[...main.querySelectorAll('.op')];let k=ops.indexOf(document.activeElement);
+      k=(k+(e.key==='ArrowDown'||e.key==='ArrowRight'?1:-1)+ops.length)%ops.length;ops.forEach(o=>o.tabIndex=-1);ops[k].tabIndex=0;ops[k].focus();
+    };
+    on('voltar',()=>st.i>0?ir('q',st.i-1,-1):ir('inicio',0,-1));
+    on('avancar',proxima);
+  }
+  if(st.tela==='abertas'){
+    ABERTAS.forEach(a=>{const t=document.getElementById(a.id);t.oninput=()=>{st.abertas[a.id]=t.value;document.getElementById('c_'+a.id).textContent=t.value.length+'/800'}});
+    on('voltar',()=>ir('q',PERGUNTAS.length-1,-1));
+    on('avancar',()=>ir('revisao',0,1));
+  }
+  if(st.tela==='revisao'){
+    main.querySelectorAll('[data-ir]').forEach(b=>b.onclick=()=>{st.voltarRevisao=true;ir('q',+b.dataset.ir,-1)});
+    on('voltar',()=>ir('abertas',0,-1));
+    on('enviar',enviar);
+  }
+  if(st.tela==='inicio') mostrarInstalar();
+}
+
+function ir(tela,i,dir){st.tela=tela;st.i=i;st.dir=dir;render()}
+function escolher(v){
+  const p=PERGUNTAS[st.i];st.resp[p.id]=v;
+  main.querySelectorAll('.op').forEach(b=>{const s=+b.dataset.v===v;b.setAttribute('aria-checked',s);b.tabIndex=s?0:-1});
+  $('#avancar').disabled=false;
+  if(navigator.vibrate) navigator.vibrate(8);
+  clearTimeout(escolher._t);escolher._t=setTimeout(proxima,380);
+}
+function proxima(){
+  clearTimeout(escolher._t);
+  const p=PERGUNTAS[st.i];if(!st.resp[p.id])return;
+  if(st.voltarRevisao){st.voltarRevisao=false;return ir('revisao',0,1)}
+  if(st.i<PERGUNTAS.length-1) ir('q',st.i+1,1); else ir('abertas',0,1);
+}
+
+document.addEventListener('keydown',e=>{
+  if(st.tela!=='q'||e.target.tagName==='TEXTAREA')return;
+  const n=+e.key; if(n>=1&&n<=6){escolher(ESCALA[n-1].v);return}
+  if(e.key==='Enter'&&document.activeElement?.id!=='voltar'){e.preventDefault();proxima()}
+});
+
+/* ---------- envio, com fila offline ---------- */
+function lerFila(){try{return JSON.parse(localStorage.getItem(FILA_KEY)||'[]')}catch(e){return []}}
+function gravarFila(f){try{f.length?localStorage.setItem(FILA_KEY,JSON.stringify(f)):localStorage.removeItem(FILA_KEY)}catch(e){}}
+
+function pacote(){
+  return {campanha:CAMPANHA, versao:1,
+    perguntas:PERGUNTAS.map(p=>({id:p.id,bloco:p.bloco,texto:p.texto,inv:!!p.inv,voice:p.voice})),
+    abertasDef:ABERTAS.map(a=>({id:a.id,texto:a.texto})),
+    respostas:st.resp,
+    abertas:Object.fromEntries(ABERTAS.map(a=>[a.id,(st.abertas[a.id]||'').trim().slice(0,800)]))};
+}
+// Erro de rede: lança exceção (a resposta vai para a fila).
+// Recusa do servidor (ex.: pesquisa encerrada): devolve {ok:false,...} e não entra na fila.
+async function post(dados){
+  const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify(dados),headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow'});
+  return await r.json();
+}
+async function enviar(){
+  const dados=pacote();
+  ir('enviando',0,1);
+  if(!ENDPOINT){await new Promise(r=>setTimeout(r,700));return terminar()}
+  try{
+    const j=await post(dados);
+    if(!j.ok&&j.codigo==='encerrada'){st.encerrada=true;return terminar()}
+    if(!j.ok) throw new Error(j.erro);
+  }catch(e){gravarFila([...lerFila(),dados])}
+  terminar();
+}
+function terminar(){st.resp={};st.abertas={};ir('fim',0,1)}
+async function esvaziarFila(){
+  if(!ENDPOINT)return;const f=lerFila();if(!f.length)return;const resto=[];let enviados=0;
+  for(const d of f){try{const j=await post(d);if(j.ok)enviados++;else if(j.codigo!=='encerrada'&&j.codigo!=='invalida')resto.push(d)}catch(e){resto.push(d)}}
+  gravarFila(resto); if(enviados) toast('Resposta guardada enviada com sucesso.');
+}
+window.addEventListener('online',esvaziarFila);
+
+/* ---------- instalação (PWA) ---------- */
+let promptInstalar=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptInstalar=e;if(st.tela==='inicio')mostrarInstalar()});
+function mostrarInstalar(){
+  const box=document.getElementById('instalar');if(!box)return;
+  const instalado=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+  if(instalado){box.innerHTML='';return}
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(promptInstalar){box.innerHTML='<div class="install"><button class="btn sec" id="btnInst">Instalar na tela inicial</button></div>';
+    document.getElementById('btnInst').onclick=async()=>{promptInstalar.prompt();await promptInstalar.userChoice;promptInstalar=null;box.innerHTML=''}}
+  else if(ios){box.innerHTML='<p class="muted" style="font-size:13px;text-align:center;margin:12px 0 0">Para ter o atalho no iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.</p>'}
+}
+
+if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+render(); esvaziarFila();
+// Mostra o atalho "Ver o resultado do time" quando o líder publicar o resultado.
+if(ENDPOINT){fetch(ENDPOINT).then(r=>r.json()).then(j=>{if(!j)return;st.publicado=!!j.publicado;st.fechada=j.status==="encerrada";if((st.publicado||st.fechada)&&st.tela==="inicio")render()}).catch(()=>{})}
+</script>
+</body>
+</html>
