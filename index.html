@@ -154,7 +154,7 @@ textarea{width:100%;min-height:96px;padding:12px 14px;border-radius:14px;border:
    Cole aqui a URL do Web App do Apps Script (termina em /exec).
    Sem URL, a página roda em MODO DEMONSTRAÇÃO e não grava nada. */
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwY6wtu2rxdj4lpGC_88gmSg4Eu8-YSO2E43Hl5piZ39I6rRC6e_f_mWarqAVvXV_fRyQ/exec';
-const CAMPANHA = 'conexao-2027-1';
+const CAMPANHA = 'conexao-2026-12';
 // Frase do rodapé da tela final: [destaque, complemento]. Use ['',''] para não mostrar.
 const FRASE = ['O Reino de Deus na dinâmica da vida.', 'Onde suficiências e necessidades se complementam!'];
 /* ================================================== */
@@ -209,6 +209,10 @@ const ABERTAS = [
 
 const BLOCOS = [...new Set(PERGUNTAS.map(p=>p.bloco))];
 const FILA_KEY = 'conexao_fila_envio';
+// Trava simples: guarda NESTE aparelho que a rodada já foi respondida (nada vai para o servidor).
+const RESP_KEY = 'conexao_respondeu_' + CAMPANHA;
+function jaRespondeu(){try{return !!localStorage.getItem(RESP_KEY)}catch(e){return false}}
+function marcarRespondida(v){try{v?localStorage.setItem(RESP_KEY,'1'):localStorage.removeItem(RESP_KEY)}catch(e){}}
 const st = {tela:'inicio', i:0, resp:{}, abertas:{}, dir:1};
 
 const $ = s => document.querySelector(s);
@@ -262,6 +266,7 @@ function render(){
 
 function telaInicio(cls){
   if(st.fechada) return telaFechada(cls);
+  if(jaRespondeu()) return telaJaRespondeu(cls);
   return `<div class="card ${cls}">
     ${st.publicado?`<a class="verres" href="resultado.html"><span style="font-size:24px">📊</span><div><b>Ver o resultado do time</b><span>A última pesquisa já tem resultado e plano de ação</span></div><span class="ar">›</span></a>`:""}
     <span class="chip">${ico.clock.replace('<svg','<svg width="14" height="14"')} cerca de 5 minutos</span>
@@ -278,6 +283,20 @@ function telaInicio(cls){
     <div class="nav" style="margin-top:22px"><button class="btn" id="comecar" data-foco>Começar</button></div>
     <div id="instalar"></div>
     ${!ENDPOINT?'<div class="demo">Modo demonstração: as respostas não são gravadas.</div>':''}
+  </div>`;
+}
+
+// Este aparelho já respondeu a rodada atual.
+function telaJaRespondeu(cls){
+  return `<div class="card fim ${cls}">
+    <div class="ok">${ico.check}</div>
+    <span class="chip">Rodada em andamento</span>
+    <h1 data-foco>Você já respondeu esta rodada</h1>
+    <p class="muted">Obrigado! Sua resposta já está com as do time. Cada pessoa responde uma vez, para o resultado ser justo.</p>
+    ${st.publicado?`<a class="verres" href="resultado.html"><span style="font-size:24px">📊</span><div><b>Ver o resultado do time</b><span>O que ouvimos e o plano de ação, com o andamento</span></div><span class="ar">›</span></a>`
+      :`<p class="muted">O resultado do time vai aparecer <b>aqui mesmo</b> assim que for consolidado.</p>`}
+    ${FRASE[0]?`<p class="assin"><span class="t1">${esc(FRASE[0])}</span><span class="t2">${esc(FRASE[1]||"")}</span></p>`:""}
+    <p style="text-align:center;margin:14px 0 0"><button class="link" id="outraPessoa">Outra pessoa vai responder neste aparelho</button></p>
   </div>`;
 }
 
@@ -358,6 +377,7 @@ function telaFim(cls){
 function ligar(){
   const on=(id,fn)=>{const el=document.getElementById(id);if(el)el.onclick=fn};
   on('comecar',()=>ir('q',0,1));
+  on('outraPessoa',()=>{if(confirm('Use só se for OUTRA pessoa, que ainda não respondeu. Continuar?')){marcarRespondida(false);ir('inicio',0,1)}});
   if(st.tela==='q'){
     main.querySelectorAll('.op').forEach(b=>b.onclick=()=>escolher(+b.dataset.v));
     main.querySelector('.ops').onkeydown=e=>{
@@ -428,6 +448,7 @@ async function enviar(){
     if(!j.ok&&j.codigo==='encerrada'){st.encerrada=true;return terminar()}
     if(!j.ok) throw new Error(j.erro);
   }catch(e){gravarFila([...lerFila(),dados])}
+  marcarRespondida(true); // enviada ou guardada na fila para enviar depois
   terminar();
 }
 function terminar(){st.resp={};st.abertas={};ir('fim',0,1)}
