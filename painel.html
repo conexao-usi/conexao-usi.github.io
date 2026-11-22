@@ -142,6 +142,100 @@ header.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .spin{width:36px;height:36px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--brand);animation:sp 1s linear infinite;margin:20vh auto}
 @keyframes sp{to{transform:rotate(360deg)}}
 
+/* ================= PAINEL: barra do app, abas e visão geral ================= */
+.wrap{max-width:none;padding:0}
+.login{margin:12vh 16px 0}
+@media (min-width:452px){.login{margin:12vh auto 0}}
+.appbar{position:sticky;top:0;z-index:10;background:linear-gradient(135deg,#0b5cab,#0a4a8c);color:#fff;padding-top:env(safe-area-inset-top);box-shadow:0 2px 14px rgba(8,30,60,.18)}
+.ab-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
+.appbar .logo{background:rgba(255,255,255,.16);width:36px;height:36px}
+.ab-t{flex:1;min-width:0}
+.ab-t h1{font-size:17px;margin:0;line-height:1.2;font-weight:750}
+.ab-t .s{font-size:12px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ab-t .demo{color:#ffd27a}
+.ib{display:inline-flex;align-items:center;gap:6px;min-width:40px;min-height:40px;justify-content:center;border-radius:12px;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;font-weight:650;font-size:14px;padding:0 10px}
+.ib:hover{background:rgba(255,255,255,.2)}
+.ib.forte{background:#fff;color:#0b5cab}
+.ib svg{width:18px;height:18px}
+.ib:focus-visible,.abas button:focus-visible,.kp:focus-visible,.lk:focus-visible{outline:3px solid #ffd27a;outline-offset:2px}
+@media (max-width:560px){.ib.forte span{display:none}}
+.abas{border-top:1px solid rgba(255,255,255,.14)}
+.abas-in{max-width:1000px;margin:0 auto;display:flex;padding:0 8px}
+.abas button{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:7px;min-height:46px;border:0;background:transparent;color:rgba(255,255,255,.72);font-weight:650;font-size:14px;cursor:pointer;border-bottom:3px solid transparent}
+.abas button svg{width:18px;height:18px}
+.abas button[aria-selected="true"]{color:#fff;border-bottom-color:#fff}
+.bd{font-style:normal;font-size:11px;font-weight:800;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#f0703a;color:#fff;display:inline-grid;place-items:center}
+.bd.neutro{background:rgba(255,255,255,.25)}
+/* celular: abas viram barra inferior, como num app */
+@media (max-width:640px){
+  .abas{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -4px 18px rgba(19,32,51,.08)}
+  .abas-in{padding:0}
+  .abas button{flex-direction:column;gap:2px;font-size:11px;min-height:60px;color:var(--muted);border-bottom:0;border-top:3px solid transparent}
+  .abas button svg{width:22px;height:22px}
+  .abas button[aria-selected="true"]{color:var(--brand);border-top-color:var(--brand);border-bottom:0}
+  .abas .bd{position:absolute;top:6px;left:calc(50% + 6px)}
+  .abas .bd.neutro{background:var(--muted)}
+  .conteudo{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}
+}
+.conteudo{max-width:1000px;margin:0 auto;padding:16px 16px 32px;display:grid;gap:14px}
+.conteudo>.card{margin:0}
+.conteudo #aviso:empty{display:none!important}
+/* destaque da adesão */
+.hero{display:flex;gap:20px;align-items:center;padding:20px;border-radius:20px;color:#fff;background:radial-gradient(600px 260px at 100% 0%,#1d8fe0 0,#0b5cab 45%,#0a3f78 100%);box-shadow:0 10px 30px rgba(11,92,171,.25)}
+.h-ring{position:relative;flex:none;width:116px;height:116px}
+.h-ring .ring{width:116px;height:116px}
+.hero .ring circle:first-child{stroke:rgba(255,255,255,.2)}
+.hero .ring circle:last-child{stroke:#fff}
+.h-pct{position:absolute;inset:0;display:grid;place-content:center;text-align:center;line-height:1}
+.h-pct b{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.h-pct span{font-size:11px;opacity:.8;margin-top:3px;letter-spacing:.04em}
+.h-tx{flex:1;min-width:0}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.16)}
+.pill.ao-vivo i{width:8px;height:8px;border-radius:50%;background:#5ee39a;box-shadow:0 0 0 0 rgba(94,227,154,.7);animation:pulso 1.8s infinite}
+.pill.fim{background:#1e8e5a}
+@keyframes pulso{70%{box-shadow:0 0 0 7px rgba(94,227,154,0)}100%{box-shadow:0 0 0 0 rgba(94,227,154,0)}}
+@media (prefers-reduced-motion:reduce){.pill.ao-vivo i{animation:none}}
+.h-big{font-size:34px;font-weight:800;line-height:1.1;margin:8px 0 10px;font-variant-numeric:tabular-nums}
+.h-big small{font-size:15px;font-weight:600;opacity:.85}
+.meter{position:relative;height:10px;border-radius:5px;background:rgba(255,255,255,.2);margin:0 0 22px}
+.meter span{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:#fff}
+.meter i{position:absolute;top:-4px;bottom:-4px;width:2px;background:#ffd27a}
+.meter em{position:absolute;top:16px;right:-2px;font-style:normal;font-size:11px;font-weight:700;color:#ffd27a;white-space:nowrap}
+.hero p{margin:0;font-size:13.5px;line-height:1.45;opacity:.92}
+@media (max-width:480px){.hero{flex-direction:column;align-items:stretch}.h-ring{align-self:center}}
+/* números-chave */
+.kpis3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kp{display:flex;flex-direction:column;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow);font:inherit;color:inherit}
+button.kp{cursor:pointer}
+.kp span{font-size:12px;font-weight:650;color:var(--muted);line-height:1.25}
+.kp b{font-size:28px;font-weight:800;line-height:1.15;margin-top:4px;font-variant-numeric:tabular-nums}
+.kp small{font-size:12px;color:var(--muted)}
+.kp.ruim{border-color:color-mix(in srgb,var(--des) 45%,var(--line));background:color-mix(in srgb,var(--des) 7%,var(--card))}
+.kp.ruim b,.kp.ruim small{color:var(--des)}
+@media (max-width:400px){.kp b{font-size:24px}.kp{padding:10px 11px}}
+.h2l{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.h2l h2{margin:0}
+.lk{margin-left:auto;border:0;background:none;color:var(--brand);font-weight:700;font-size:13px;cursor:pointer;padding:4px}
+.aten{display:grid;gap:8px}
+.at{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--bg)}
+.at>b{flex:none;width:56px;font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.at>b.r{color:var(--des)}
+.at .bl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.at p{margin:1px 0 0;font-size:14px;line-height:1.35}
+.temas{display:grid;gap:12px}
+.tm{display:grid;grid-template-columns:minmax(90px,150px) minmax(0,1fr) 46px;gap:12px;align-items:center}
+.tm .tl{font-size:14px;font-weight:600}
+.tm .tb{position:relative;height:12px;border-radius:6px;background:var(--grid)}
+.tm .tb span{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--fav)}
+.tm .tb span.r{background:var(--des)}
+.tm .tb i{position:absolute;left:50%;top:-4px;bottom:-4px;border-left:2px dashed var(--muted);opacity:.6}
+.tm>b{text-align:right;font-variant-numeric:tabular-nums}
+.tm>b.r{color:var(--des)}
+.trava{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:14px;background:var(--bg)}
+.trava .ic{font-size:26px;line-height:1}
+.trava p{margin:4px 0 0;font-size:14px;color:var(--ink2)}
+@media print{.appbar .ib,.abas{display:none!important}.appbar{position:static;box-shadow:none}}
+
 /* ================= PLANO DE AÇÃO ================= */
 #plano{display:none}
 body.modo-plano #app{display:none}
@@ -362,76 +456,44 @@ async function carregar(chave,login){
 function toastLinha(t){const el=document.getElementById('aviso');if(el)el.textContent=t}
 
 /* ---------------- render ---------------- */
+const ABAS=[
+  ['geral','Visão geral','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>'],
+  ['itens','Afirmações','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 12h16M4 18h7"/></svg>'],
+  ['coment','Comentários','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>'],
+  ['plano','Plano','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>']];
+ui.aba=(()=>{try{return sessionStorage.getItem('conexao_aba')||'geral'}catch(e){return 'geral'}})();
+function irAba(a){ui.aba=a;try{sessionStorage.setItem('conexao_aba',a)}catch(e){}render();window.scrollTo({top:0})}
+
 function render(){
   const d=ui.dados, fechada=d.status==='encerrada';
+  const alerta=d.itens.filter(i=>!i.oculto&&i.fav<.5).length;
+  const nav=ABAS.map(([k,t,ic])=>`<button role="tab" data-aba="${k}" aria-selected="${ui.aba===k}">${ic}<span>${t}</span>${k==='itens'&&alerta?`<i class="bd">${alerta}</i>`:''}${k==='coment'&&fechada&&d.comentarios.length?`<i class="bd neutro">${d.comentarios.length}</i>`:''}</button>`).join('');
   app.innerHTML=`
-  <header class="top">
-    <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
-    <div><h1>Painel do Líder · Conexão Usinagem</h1><div class="s">${esc(d.campanha||'pesquisa')} · atualizado ${esc(d.geradoEm)} ${DEMO?'· <span class="demo">DADOS DE EXEMPLO</span>':''}</div></div>
-    <div class="acoes">
-      <button class="btn" id="bRef" title="Atualizar">${icoRef}<span>Atualizar</span></button>
-      <button class="btn pri" id="bPri" title="Slides para apresentar ou salvar em PDF">${icoPrint}<span>Apresentação</span></button>
-      <button class="btn" id="bSair" title="Sair e esquecer a chave neste aparelho" aria-label="Sair">${icoSair}</button>
+  <header class="appbar">
+    <div class="ab-in">
+      <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
+      <div class="ab-t"><h1>Painel do Líder</h1><div class="s">Conexão Usinagem · atualizado ${esc(String(d.geradoEm).slice(-5))}${DEMO?' · <b class="demo">EXEMPLO</b>':''}</div></div>
+      <button class="ib" id="bRef" title="Atualizar" aria-label="Atualizar">${icoRef}</button>
+      <button class="ib forte" id="bPri" title="Apresentação: slides e PDF">${icoPrint}<span>Apresentação</span></button>
+      <button class="ib" id="bSair" title="Sair e esquecer a chave neste aparelho" aria-label="Sair">${icoSair}</button>
     </div>
+    <nav class="abas" role="tablist" aria-label="Seções do painel"><div class="abas-in">${nav}</div></nav>
   </header>
 
-  <div class="status">
-    <span class="tag ${fechada?'encerrada':'aberta'}">${fechada?'Resultado final':'Aberta · parcial'}</span>
-    <p>${fechada
-      ?`Pesquisa encerrada${d.encerradaEm?' em '+esc(d.encerradaEm):''}. Todos os números abaixo são finais e os comentários estão liberados.`
-      :`Os resultados atualizam a cada <b>${d.blocoParcial} respostas</b>, para proteger o anonimato. Base atual: <b>${d.base}</b> respostas${d.base<d.minRespostas?'':''}. ${d.proximaAtualizacao>0?`Faltam <b>${d.proximaAtualizacao}</b> para a próxima atualização.`:''} Os comentários só aparecem quando você encerrar.`}
-    <span id="aviso" class="demo" style="display:block"></span></p>
-  </div>
-
-  <section class="grid kpis">
-    <div class="card kpi k1">
-      ${anel(d.adesao)}
-      <div><div class="lbl">Adesão</div><div class="val">${pct(d.adesao)}</div>
-      <div class="det">${d.respostas} de ${d.time} pessoas responderam<br>Voice 2026: 94% (29 de 31)</div></div>
-    </div>
-    <div class="card kpi"><div class="lbl">Favorável médio</div><div class="val">${mediaFav(d)}</div><div class="det">média das afirmações com resultado</div></div>
-    <div class="card kpi"><div class="lbl">Abaixo de 50%</div><div class="val">${d.itens.filter(i=>!i.oculto&&i.fav<.5).length}</div><div class="det">afirmações em alerta</div></div>
-  </section>
-
-  <section class="grid duas" style="margin-top:14px">
-    <div class="card chart"><h2>Evolução da adesão</h2><p class="sub">% do time que já respondeu, dia a dia</p>${evolucao(d)}</div>
-    <div class="card"><h2>Por bloco</h2><p class="sub">% favorável médio de cada tema</p>${porBloco(d)}</div>
-  </section>
-
-  <section class="card" id="secItens" style="margin-top:14px">
-    <h2>Resultado por afirmação</h2>
-    <p class="sub">Mesma régua do Voice: favorável = concordo e concordo totalmente.</p>
-    <div class="leg"><span><i style="background:var(--des)"></i>Desfavorável (discordo)</span><span><i style="background:var(--par)"></i>Parcial (concordo parcialmente)</span><span><i style="background:var(--fav)"></i>Favorável</span></div>
-    <div class="filtros no-print"><div class="seg" role="group" aria-label="Ordenar">
-      <button data-o="bloco" aria-pressed="${ui.ordem==='bloco'}">Por bloco</button>
-      <button data-o="pior" aria-pressed="${ui.ordem==='pior'}">Pior primeiro</button>
-      ${ui.voice?`<button data-o="voice" aria-pressed="${ui.ordem==='voice'}">Maior evolução</button>`:''}</div>
-      <button class="toggle" id="tVoice" aria-pressed="${ui.voice}"><span class="sw2"></span>Mostrar Voice</button></div>
-    ${itens(d)}
-  </section>
-
-  <section class="card" style="margin-top:14px">
-    <h2>Comentários</h2>
-    ${fechada?comentarios(d):`<p class="vazio">Liberados quando a pesquisa for encerrada (menu <b>Conexão &gt; Encerrar pesquisa</b> na planilha). Assim, ninguém é identificado pela ordem de chegada.</p>`}
-  </section>
-
-  <section class="card plano-res" style="margin-top:14px">
-    <h2>Plano de ação</h2>
-    ${d.plano?resumoPlano(d.plano)+`<div class="nav" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <button class="btn" id="pEdit">Editar plano</button><button class="btn" id="pDeck">Ver na apresentação</button></div>`
-      :`<p class="sub">${fechada?'A pesquisa está encerrada: é hora de transformar o resultado em compromissos.':'Você pode montar um <b>rascunho</b> com os parciais e revisar quando encerrar.'}</p>
-      <div class="escolha"><button id="pAuto"><b>⚡ Gerar automático</b><span>O app escolhe os 3 pontos mais críticos e sugere ações. Você revisa antes de salvar.</span></button>
-      <button id="pGuia"><b>🧭 Montar passo a passo</b><span>Você escolhe os focos, as ações, os responsáveis, os prazos e as metas, com dicas em cada etapa.</span></button></div>`}
-  </section>`;
+  <main class="conteudo">
+    <span id="aviso" class="demo" style="display:block"></span>
+    ${ui.aba==='geral'?abaGeral(d,fechada,alerta):ui.aba==='itens'?abaItens(d):ui.aba==='coment'?abaComent(d,fechada):abaPlano(d,fechada)}
+  </main>`;
   const on=(id,fn)=>{const el=document.getElementById(id);if(el)el.onclick=fn};
+  app.querySelectorAll('[data-aba]').forEach(b=>b.onclick=()=>irAba(b.dataset.aba));
+  app.querySelectorAll('[data-ver]').forEach(b=>b.onclick=()=>{ui.ordem='pior';ui.pag=0;irAba('itens')});
   on('pAuto',()=>{ui.plano=planoAuto(d);abrirPlano(4)});
   on('pGuia',()=>{ui.plano={modo:'conduzido',focos:[]};abrirPlano(1)});
   on('pEdit',()=>{ui.plano=JSON.parse(JSON.stringify(d.plano));abrirPlano(4)});
   on('pDeck',abrirDeck);
-
-  document.getElementById('bRef').onclick=()=>carregar(lerChave());
-  document.getElementById('bPri').onclick=abrirDeck;
-  document.getElementById('bSair').onclick=()=>{salvarChave('');telaLogin()};
+  on('bRef',()=>carregar(DEMO?'DEMO':lerChave()));
+  on('bPri',abrirDeck);
+  on('bSair',()=>{if(!DEMO)salvarChave('');telaLogin()});
   app.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{ui.ordem=b.dataset.o;ui.pag=0;render()});
   const irPag=k=>{ui.pag=k;render();const sec=document.getElementById("secItens");if(sec){sec.scrollIntoView({block:"start"});const h=sec.querySelector(".etq b");if(h){h.setAttribute("tabindex","-1");h.focus({preventScroll:true})}}};
   app.querySelectorAll("[data-pag]").forEach(b=>b.onclick=()=>irPag(+b.dataset.pag));
@@ -440,9 +502,75 @@ function render(){
     pgI.addEventListener("touchstart",e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
     pgI.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
       if(Math.abs(dx)>60&&Math.abs(dx)>1.5*Math.abs(dy)){const k=ui.pag+(dx<0?1:-1);if(k>=0&&k<n)irPag(k)}})}
-  document.getElementById('tVoice').onclick=()=>{ui.voice=!ui.voice;if(!ui.voice&&ui.ordem==='voice'){ui.ordem='bloco';ui.pag=0}
-    try{localStorage.setItem('conexao_mostrar_voice',ui.voice?'1':'0')}catch(e){}render()};
+  on('tVoice',()=>{ui.voice=!ui.voice;if(!ui.voice&&ui.ordem==='voice'){ui.ordem='bloco';ui.pag=0}
+    try{localStorage.setItem('conexao_mostrar_voice',ui.voice?'1':'0')}catch(e){}render()});
   ligarTips();
+}
+
+/* Visão geral: adesão em destaque, números-chave, pontos de atenção, temas e evolução. */
+function abaGeral(d,fechada,alerta){
+  const vis=d.itens.filter(i=>!i.oculto);
+  const piores=vis.slice().sort((a,b)=>a.fav-b.fav).slice(0,3);
+  const falta=Math.max(0,Math.ceil(.94*d.time)-d.respostas);
+  return `
+  <section class="hero">
+    <div class="h-ring">${anel(d.adesao)}<div class="h-pct"><b>${pct(d.adesao)}</b><span>adesão</span></div></div>
+    <div class="h-tx">
+      <span class="pill ${fechada?'fim':'ao-vivo'}">${fechada?'Resultado final':'<i></i>Aberta · parcial'}</span>
+      <div class="h-big">${d.respostas} <small>de ${d.time} responderam</small></div>
+      <div class="meter" role="img" aria-label="Adesão ${pct(d.adesao)}; no Voice foi 94%"><span style="width:${Math.min(100,100*d.adesao)}%"></span><i style="left:94%"><em>Voice 94%</em></i></div>
+      <p>${fechada
+        ?`Encerrada${d.encerradaEm?' em '+esc(d.encerradaEm):''}. Números finais e comentários liberados.`
+        :`${falta?`Faltam <b>${falta}</b> para igualar o Voice. `:'Já igualou a adesão do Voice! '}Parciais com base de <b>${d.base}</b>${d.proximaAtualizacao>0?` · próxima atualização em ${d.proximaAtualizacao}`:''}.`}</p>
+    </div>
+  </section>
+
+  <section class="kpis3">
+    <div class="kp"><span>Favorável médio</span><b>${mediaFav(d)}</b><small>das afirmações</small></div>
+    <button class="kp ${alerta?'ruim':''}" data-ver><span>Abaixo de 50%</span><b>${vis.length?alerta:'—'}</b><small>ver quais ›</small></button>
+    <div class="kp"><span>${fechada?'Comentários':'Base dos parciais'}</span><b>${fechada?d.comentarios.length:d.base}</b><small>${fechada?'escritos':'respostas'}</small></div>
+  </section>
+
+  <section class="card">
+    <div class="h2l"><h2>Pontos de atenção</h2>${piores.length?'<button class="lk" data-ver>Ver todas ›</button>':''}</div>
+    ${piores.length?`<div class="aten">${piores.map(i=>`<div class="at"><b class="${i.fav<.5?'r':''}">${pct(i.fav)}</b><div><span class="bl">${esc(i.bloco)}</span><p>${esc(i.texto)}</p></div></div>`).join('')}</div>`
+      :`<p class="vazio">Aparecem quando houver pelo menos ${d.minRespostas} respostas na base.</p>`}
+  </section>
+
+  <section class="card"><h2>Por tema</h2><p class="sub">% favorável médio · linha tracejada = 50%</p>${porBloco(d)}</section>
+
+  <section class="card chart"><h2>Evolução da adesão</h2><p class="sub">% do time que já respondeu, dia a dia</p>${evolucao(d)}</section>`;
+}
+
+function abaItens(d){
+  return `<section class="card" id="secItens">
+    <h2>Resultado por afirmação</h2>
+    <p class="sub">Mesma régua do Voice: favorável = concordo e concordo totalmente.</p>
+    <div class="leg"><span><i style="background:var(--des)"></i>Desfavorável</span><span><i style="background:var(--par)"></i>Parcial</span><span><i style="background:var(--fav)"></i>Favorável</span></div>
+    <div class="filtros no-print"><div class="seg" role="group" aria-label="Ordenar">
+      <button data-o="bloco" aria-pressed="${ui.ordem==='bloco'}">Por bloco</button>
+      <button data-o="pior" aria-pressed="${ui.ordem==='pior'}">Pior primeiro</button>
+      ${ui.voice?`<button data-o="voice" aria-pressed="${ui.ordem==='voice'}">Maior evolução</button>`:''}</div>
+      <button class="toggle" id="tVoice" aria-pressed="${ui.voice}"><span class="sw2"></span>Comparar com Voice</button></div>
+    ${itens(d)}
+  </section>`;
+}
+
+function abaComent(d,fechada){
+  return `<section class="card"><h2>Comentários</h2>
+    ${fechada?`<p class="sub">Embaralhados, sem data nem ordem de chegada.</p>${comentarios(d)}`
+      :`<div class="trava"><div class="ic">🔒</div><div><b>Liberados quando você encerrar a pesquisa</b><p>Na planilha: <b>Conexão &gt; Encerrar pesquisa</b>. Antes disso ficam escondidos, para ninguém ser reconhecido pela ordem em que respondeu.</p></div></div>`}
+  </section>`;
+}
+
+function abaPlano(d,fechada){
+  return `<section class="card plano-res"><h2>Plano de ação</h2>
+    ${d.plano?resumoPlano(d.plano)+`<div class="nav" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn pri" id="pEdit">Editar plano</button><button class="btn" id="pDeck">Ver na apresentação</button></div>`
+      :`<p class="sub">${fechada?'A pesquisa está encerrada: é hora de transformar o resultado em compromissos.':'Você pode montar um <b>rascunho</b> com os parciais e revisar quando encerrar.'}</p>
+      <div class="escolha"><button id="pAuto"><b>⚡ Gerar automático</b><span>O app escolhe os 3 pontos mais críticos e sugere ações. Você revisa antes de salvar.</span></button>
+      <button id="pGuia"><b>🧭 Montar passo a passo</b><span>Você escolhe os focos, as ações, os responsáveis, os prazos e as metas, com dicas em cada etapa.</span></button></div>`}
+  </section>`;
 }
 
 function mediaFav(d){const v=d.itens.filter(i=>!i.oculto);return v.length?pct(v.reduce((a,i)=>a+i.fav,0)/v.length):'—'}
@@ -477,8 +605,9 @@ function porBloco(d){
   const bl={};d.itens.filter(i=>!i.oculto).forEach(i=>{(bl[i.bloco]=bl[i.bloco]||[]).push(i.fav)});
   const ks=Object.keys(bl);
   if(!ks.length) return `<p class="vazio">Aparece quando houver pelo menos ${d.minRespostas} respostas na base.</p>`;
-  return `<div class="resumo-blocos">${ks.map(k=>{const m=bl[k].reduce((a,b)=>a+b,0)/bl[k].length;
-    return `<div class="rb"><div class="n">${pct(m)}</div><div class="l">${esc(k)}</div></div>`}).join('')}</div>`;
+  const ls=ks.map(k=>({k,m:bl[k].reduce((a,b)=>a+b,0)/bl[k].length,n:bl[k].length})).sort((a,b)=>a.m-b.m);
+  return `<div class="temas">${ls.map(t=>`<div class="tm" data-tip="<b>${esc(t.k)}</b><br>${pct(t.m)} favorável · ${t.n} afirmaç${t.n>1?'ões':'ão'}">
+    <span class="tl">${esc(t.k)}</span><div class="tb"><span class="${t.m<.5?'r':''}" style="width:${100*t.m}%"></span><i></i></div><b class="${t.m<.5?'r':''}">${pct(t.m)}</b></div>`).join('')}</div>`;
 }
 
 const voicePct=v=>{const m=/(\d+)%/.exec(v||'');return m?+m[1]/100:null};
