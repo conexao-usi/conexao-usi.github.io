@@ -365,9 +365,9 @@ function telaFim(cls){
     <h1 data-foco>Obrigado!</h1>
     <p class="muted">${st.encerrada?'Esta rodada da pesquisa já foi encerrada, então sua resposta não entrou no resultado. Obrigado pela disposição. Fique de olho na próxima!':pend?'Você está sem internet agora. Sua resposta ficou guardada neste aparelho e será enviada sozinha quando a conexão voltar.':'Sua resposta foi registrada, de forma anônima.'}</p>
     <div class="passos">
-      <div class="passo"><span class="num">1</span><span>As respostas de todos são juntadas por quem consolida a pesquisa.</span></div>
-      <div class="passo"><span class="num">2</span><span>Em até 2 semanas, o time vê o resultado do grupo.</span></div>
-      <div class="passo"><span class="num">3</span><span>Escolhemos juntos o que mudar a seguir.</span></div>
+      <div class="passo"><span class="num">1</span><span>Quando a pesquisa fechar, juntamos as respostas de todos. Ninguém vê a resposta de uma pessoa.</span></div>
+      <div class="passo"><span class="num">2</span><span><b>Em até 2 semanas</b> depois do encerramento, envio no grupo <b>Conexão Usinagem</b> o link com o resultado do time. Ele também aparece aqui mesmo, neste app.</span></div>
+      <div class="passo"><span class="num">3</span><span>A partir dele, montamos o plano de ação e você acompanha o andamento.</span></div>
     </div>
     ${FRASE[0]?`<p class="assin"><span class="t1">${esc(FRASE[0])}</span>${FRASE[1]?`<span class="t2">${esc(FRASE[1])}</span>`:''}</p>`:''}
     ${!ENDPOINT?'<div class="demo">Modo demonstração: nada foi gravado.</div>':''}

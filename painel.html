@@ -309,6 +309,8 @@ body.modo-deck #deck{display:block}
 /* ======== CONFIGURAÇÃO: a mesma URL /exec do index.html ======== */
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwY6wtu2rxdj4lpGC_88gmSg4Eu8-YSO2E43Hl5piZ39I6rRC6e_f_mWarqAVvXV_fRyQ/exec';
 /* ================================================================ */
+// painel.html?demo mostra dados de exemplo sem chave e sem gravar nada (para mostrar ao RH).
+const DEMO = !ENDPOINT || new URLSearchParams(location.search).has('demo');
 const CHAVE_KEY='conexao_chave_lider';
 const app=document.getElementById('app'), tip=document.getElementById('tip');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -323,7 +325,7 @@ function lerChave(){try{return localStorage.getItem(CHAVE_KEY)||''}catch(e){retu
 function salvarChave(c){try{c?localStorage.setItem(CHAVE_KEY,c):localStorage.removeItem(CHAVE_KEY)}catch(e){}}
 
 async function buscar(chave){
-  if(!ENDPOINT) return demo();
+  if(DEMO) return demo();
   const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({acao:'painel',chave}),headers:{'Content-Type':'text/plain;charset=utf-8'}});
   return r.json();
 }
@@ -348,8 +350,8 @@ function telaLogin(msg=''){
 async function carregar(chave,login){
   try{
     const d=await buscar(chave);
-    if(!d.ok){salvarChave('');return telaLogin(d.codigo==='chave'?'Chave inválida.':'Erro: '+(d.erro||'desconhecido'))}
-    salvarChave(chave);ui.dados=d;render();
+    if(!d.ok){if(!DEMO)salvarChave('');return telaLogin(d.codigo==='chave'?'Chave inválida.':'Erro: '+(d.erro||'desconhecido'))}
+    if(!DEMO)salvarChave(chave);ui.dados=d;render();
     clearInterval(ui.timer);
     if(d.status!=='encerrada') ui.timer=setInterval(()=>carregar(chave),60000);
   }catch(e){
@@ -365,7 +367,7 @@ function render(){
   app.innerHTML=`
   <header class="top">
     <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
-    <div><h1>Painel do Líder · Conexão Usinagem</h1><div class="s">${esc(d.campanha||'pesquisa')} · atualizado ${esc(d.geradoEm)} ${!ENDPOINT?'· <span class="demo">DADOS DE EXEMPLO</span>':''}</div></div>
+    <div><h1>Painel do Líder · Conexão Usinagem</h1><div class="s">${esc(d.campanha||'pesquisa')} · atualizado ${esc(d.geradoEm)} ${DEMO?'· <span class="demo">DADOS DE EXEMPLO</span>':''}</div></div>
     <div class="acoes">
       <button class="btn" id="bRef" title="Atualizar">${icoRef}<span>Atualizar</span></button>
       <button class="btn pri" id="bPri" title="Slides para apresentar ou salvar em PDF">${icoPrint}<span>Apresentação</span></button>
@@ -663,7 +665,7 @@ async function salvarPlano(){
   p.base=ui.dados.status==='encerrada'?'final':'parcial';
   const b=document.getElementById('plSalvar');b.disabled=true;b.textContent='Salvando…';
   try{
-    if(ENDPOINT){
+    if(!DEMO){
       const r=await fetch(ENDPOINT,{method:'POST',body:JSON.stringify({acao:'salvarPlano',chave:lerChave(),plano:p}),headers:{'Content-Type':'text/plain;charset=utf-8'}});
       const j=await r.json();if(!j.ok)throw new Error(j.erro||'falha');
     } else { try{localStorage.setItem('conexao_plano_demo',JSON.stringify(p))}catch(e){} }
@@ -922,15 +924,15 @@ function demo(){
    ['Líder','Meu líder trata todos de forma justa, sem favorecer ninguém.',''],['Líder','Meu líder age com firmeza quando alguém tem um comportamento inadequado.',''],['Motivação','Me sinto motivado a dar o meu melhor todos os dias.','· 55%']];
   const fav=[.45,.5,.6,.55,.4,.35,.4,.35,.6,.65,.55,.75,.6,.5,.6],par=[.35,.3,.25,.3,.35,.3,.35,.4,.25,.2,.3,.15,.25,.3,.25];
   const n=20;
-  return Promise.resolve({ok:true,status:'aberta',campanha:'conexao-2027-1',time:31,respostas:22,adesao:22/31,base:n,proximaAtualizacao:3,minRespostas:5,blocoParcial:5,
-    porDia:[['2027-02-09',6],['2027-02-10',5],['2027-02-11',3],['2027-02-12',4],['2027-02-13',1],['2027-02-16',3]].map(([data,n])=>({data,n})),
+  return Promise.resolve({ok:true,status:'aberta',campanha:'conexao-2026-12',time:31,respostas:22,adesao:22/31,base:n,proximaAtualizacao:3,minRespostas:5,blocoParcial:5,
+    porDia:[['2026-12-01',6],['2026-12-02',5],['2026-12-03',3],['2026-12-04',4],['2026-12-05',1],['2026-12-08',3]].map(([data,n])=>({data,n})),
     itens:P.map(([bloco,texto,v],k)=>({id:'q'+(k+1),bloco,texto,voice:v?'Voice'+v:'',n,oculto:false,fav:fav[k],par:par[k],des:1-fav[k]-par[k],media:4.4})),
     plano:(()=>{try{return JSON.parse(localStorage.getItem('conexao_plano_demo')||'null')}catch(e){return null}})(),
     comentarios:[],geradoEm:new Date().toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})});
 }
 
 const c0=lerChave();
-if(ENDPOINT&&!c0) telaLogin(); else carregar(c0||'DEMO');
+if(!DEMO&&!c0) telaLogin(); else carregar(DEMO?'DEMO':c0);
 </script>
 </body>
 </html>

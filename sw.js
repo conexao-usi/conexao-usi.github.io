@@ -1,5 +1,5 @@
 // Aumente a VERSAO sempre que publicar uma mudança, para os celulares atualizarem.
-const VERSAO = 'conexao-v6';
+const VERSAO = 'conexao-v7';
 const ARQUIVOS = ['./', 'index.html', 'manifest.webmanifest',
   'resultado.html', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
