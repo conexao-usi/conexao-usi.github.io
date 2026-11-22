@@ -231,6 +231,7 @@ button.kp{cursor:pointer}
 .tm .tb i{position:absolute;left:50%;top:-4px;bottom:-4px;border-left:2px dashed var(--muted);opacity:.6}
 .tm>b{text-align:right;font-variant-numeric:tabular-nums}
 .tm>b.r{color:var(--des)}
+@media (max-width:640px){.chart text{font-size:17px}}
 .trava{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:14px;background:var(--bg)}
 .trava .ic{font-size:26px;line-height:1}
 .trava p{margin:4px 0 0;font-size:14px;color:var(--ink2)}
@@ -472,7 +473,7 @@ function render(){
   <header class="appbar">
     <div class="ab-in">
       <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-7 4 14 3-7h6"/></svg></div>
-      <div class="ab-t"><h1>Painel do Líder</h1><div class="s">Conexão Usinagem · atualizado ${esc(String(d.geradoEm).slice(-5))}${DEMO?' · <b class="demo">EXEMPLO</b>':''}</div></div>
+      <div class="ab-t"><h1>Painel do Líder</h1><div class="s">Usinagem · ${fechada?"final":"ao vivo"} · ${esc(String(d.geradoEm).slice(-5))}${DEMO?' · <b class="demo">EXEMPLO</b>':''}</div></div>
       <button class="ib" id="bRef" title="Atualizar" aria-label="Atualizar">${icoRef}</button>
       <button class="ib forte" id="bPri" title="Apresentação: slides e PDF">${icoPrint}<span>Apresentação</span></button>
       <button class="ib" id="bSair" title="Sair e esquecer a chave neste aparelho" aria-label="Sair">${icoSair}</button>
